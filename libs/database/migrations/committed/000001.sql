@@ -1,7 +1,8 @@
 --! Previous: -
---! Hash: sha1:f86ae42ce7d25478b151f9b9b789bb1013b76e8e
+--! Hash: sha1:a0cad2a62400135facabc94e4745acd38e199f11
 
 -- Enter migration here
+
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp" WITH SCHEMA public;
