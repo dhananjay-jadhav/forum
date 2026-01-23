@@ -1,5 +1,5 @@
 import { env, logger } from '@app/utils';
-import { ASTVisitor,GraphQLError, ValidationContext } from 'graphql';
+import { ASTVisitor, GraphQLError, ValidationContext } from 'graphql';
 import type { PostGraphilePlugin } from 'postgraphile';
 
 import { validateQuery } from '../validation/query-validation';
@@ -26,6 +26,19 @@ export const QueryValidationPlugin: PostGraphilePlugin = {
                         validated = true;
 
                         const document = context.getDocument();
+
+                        // Skip introspection queries (GraphiQL / tooling)
+                        const isIntrospection = document.definitions.every(def => {
+                            if (def.kind !== 'OperationDefinition') return true;
+
+                            return def.selectionSet.selections.every(
+                                selection => selection.kind === 'Field' && selection.name.value.startsWith('__')
+                            );
+                        });
+
+                        if (isIntrospection) {
+                            return; // allow GraphiQL schema loading
+                        }
 
                         const maxDepth = env.GRAPHQL_DEPTH_LIMIT;
                         const maxCost = env.GRAPHQL_COST_LIMIT;
