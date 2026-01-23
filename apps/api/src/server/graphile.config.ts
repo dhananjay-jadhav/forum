@@ -1,9 +1,13 @@
+import { LoggingPlugin, QueryValidationPlugin } from '@app/gql';
 import { env, logger } from '@app/utils';
 import PgSimplifyInflectorPlugin from '@graphile-contrib/pg-simplify-inflector';
-import { PostGraphileOptions } from 'postgraphile';
+import { makePluginHook, PostGraphileOptions } from 'postgraphile';
+
+const pluginHook = makePluginHook([QueryValidationPlugin, LoggingPlugin]);
 
 export const postGraphileOptions: PostGraphileOptions = {
-    watchPg: false,// env.isDevelopment,
+    pluginHook,
+    watchPg: false, // env.isDevelopment,
     subscriptions: true,
     retryOnInitFail: (error: Error, attempts: number) => {
         if (attempts > 10) {
@@ -15,8 +19,8 @@ export const postGraphileOptions: PostGraphileOptions = {
     dynamicJson: true,
     setofFunctionsContainNulls: false,
     ignoreRBAC: false,
-    showErrorStack: env.isDevelopment ? "json" : false,
-    extendedErrors: env.isDevelopment ? ["hint", "detail", "errcode"] : ['errcode'],
+    showErrorStack: env.isDevelopment ? 'json' : false,
+    extendedErrors: env.isDevelopment ? ['hint', 'detail', 'errcode'] : ['errcode'],
     appendPlugins: [PgSimplifyInflectorPlugin],
     graphiql: env.isDevelopment,
     enhanceGraphiql: env.isDevelopment,
