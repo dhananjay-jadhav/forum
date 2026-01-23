@@ -20,13 +20,10 @@
     ],
     "references": [
         {
-            "path": "../../libs/database/tsconfig.lib.json"
-        },
-        {
-            "path": "../../libs/gql/tsconfig.lib.json"
-        },
-        {
             "path": "../../libs/utils/tsconfig.lib.json"
+        },
+        {
+            "path": "../../libs/database/tsconfig.lib.json"
         }
     ]
 }

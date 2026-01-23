@@ -3,5 +3,5 @@
  * Contains server initialization and lifecycle management
  */
 
-export { setupGraphQL } from './graphql';
+export { postGraphileOptions } from './graphile.config';
 export { setupGracefulShutdown } from './shutdown';
