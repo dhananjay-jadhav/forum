@@ -1,13 +1,12 @@
 import { createServer } from 'node:http';
 
 import { getPool } from '@app/database';
-import { env, getDatabaseSchemas, logger } from '@app/utils';
+import { env, logger } from '@app/utils';
 import express, { Express } from 'express';
-import postgraphile from 'postgraphile';
 
 import { setupErrorHandlers, setupMiddleware } from './middleware';
 import { router } from './router';
-import { postGraphileOptions, setupGracefulShutdown } from './server';
+import { setupGracefulShutdown, setupGraphQL } from './server';
 
 // ============================================================================
 // Server Initialization
@@ -38,20 +37,23 @@ function startServer(): void {
         app.use(router);
 
         // Setup GraphQL server (must be before error handlers)
-        app.use(postgraphile(getPool(), getDatabaseSchemas(), postGraphileOptions));
+        const pgl = setupGraphQL();
+        app.use(pgl);
 
         // Setup error handlers (must be after GraphQL)
         setupErrorHandlers(app);
 
         // Setup graceful shutdown handlers
-        setupGracefulShutdown(server);
+        setupGracefulShutdown(server, pgl);
 
         // Start listening
         server.listen(env.PORT, () => {
-            logger.info({ port: env.PORT, env: env.NODE_ENV }, `${env.APP_NAME} listening at http://localhost:${env.PORT}`);
+            logger.info(
+                { port: env.PORT, env: env.NODE_ENV },
+                `${env.APP_NAME} listening at http://localhost:${env.PORT}`
+            );
             logger.info({ port: env.PORT }, `GraphQL available at http://localhost:${env.PORT}/graphql`);
         });
-
     } catch (err) {
         logger.error(err);
     }

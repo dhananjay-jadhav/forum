@@ -5,3 +5,4 @@
 
 export { postGraphileOptions } from './graphile.config';
 export { setupGracefulShutdown } from './shutdown';
+export { setupGraphQL } from './graphql';

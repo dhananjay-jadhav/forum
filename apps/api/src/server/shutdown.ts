@@ -1,13 +1,17 @@
-import { Server } from 'node:http';
+import { IncomingMessage, Server, ServerResponse } from 'node:http';
 
 import { closePool } from '@app/database';
 import { env, logger } from '@app/utils';
+import { HttpRequestHandler } from 'postgraphile';
 
 /**
  * Sets up graceful shutdown handlers for SIGTERM and SIGINT signals.
  * Ensures proper cleanup of resources before process exit.
  */
-export function setupGracefulShutdown(server: Server): void {
+export function setupGracefulShutdown(
+    server: Server,
+    pgl: HttpRequestHandler<IncomingMessage, ServerResponse<IncomingMessage>>
+): void {
     let isShuttingDown = false;
 
     const shutdown = async (signal: string): Promise<void> => {
@@ -40,8 +44,8 @@ export function setupGracefulShutdown(server: Server): void {
             logger.info('HTTP server closed');
 
             // TO-DO: Release PostGraphile resources
-            // await pgl.release();
-            // logger.info('PostGraphile released');
+            await pgl.release();
+            logger.info('PostGraphile released');
 
             // Close database pool
             await closePool();
