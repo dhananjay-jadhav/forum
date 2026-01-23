@@ -1,28 +1,21 @@
-# NX PostGraphile Starter
+# NX Forum
 
-A production-ready [PostGraphile 5](https://grafast.org/postgraphile/) GraphQL API starter built with [Nx](https://nx.dev), Express.js, and PostgreSQL.
-
-## Related Projects
-
-- **[nx-postgraphile-fastify-template](https://github.com/dhananjay-jadhav/nx-postgraphile-fastify-template)**: For even better performance, check out this alternative starter that uses Fastify instead of Express. Fastify delivers 2-3x higher throughput with lower overhead, making it ideal for high-load applications. See the [detailed benchmark comparison](https://github.com/dhananjay-jadhav/nx-postgraphile-fastify-template/blob/main/performance/BenchMark.md).
-
+A real-world web forum application built with [PostGraphile 4](https://www.graphile.org/postgraphile/) for rapidly generating a robust GraphQL API from your PostgreSQL schema. The project leverages [Nx](https://nx.dev) for modular development, Express.js for the backend API, and advanced database migrations to model forums, users, topics, and posts.
 
 ## Features
 
-- 🚀 **PostGraphile 5** - Next-generation GraphQL API from your PostgreSQL schema
-- 📦 **Nx Monorepo** - Scalable workspace with libraries and applications
-- 🔒 **Production-ready** - Includes health checks, graceful shutdown, and proper error handling
-- 📝 **Pino Logging** - Structured JSON logging with pino and pino-http
-- 🔧 **Environment Validation** - Type-safe configuration using [Joi](https://github.com/hapijs/joi)
-- 🐳 **Docker Integration** - `docker-compose` for easy local development setup
-- 🔄 **GitHub Actions CI** - Automated linting, testing, and building
-- 🏊 **Connection Pooling** - Optimized pg Pool configuration for production
-- 🧪 **Testing** - Jest-based unit and e2e testing
-- 🤖 **GraphQL Codegen** - Type generation for your GraphQL schema
-- 🛡️ **Rate Limiting** - Express rate limiting with configurable limits
-- 🔐 **GraphQL Security** - Query depth and cost limiting to prevent abuse
-- 📊 **GraphQL Logging Plugin** - Structured logging with trace IDs for all operations
-- 🛠️ **Code Generation** - WrapPlan stub generator for custom CRUD logic
+- 🚀 **PostGraphile 4** - Powerful, customizable GraphQL API built directly from PostgreSQL, integrated for forum discussion and user management.
+- 📦 **Nx Monorepo** - Structured codebase organized by features and shared modules.
+- 🔒 **Production-Grade** - Health checks, graceful shutdown, and comprehensive error handling.
+- 📝 **Structured Logging** - Efficient application logging with pino and pino-http.
+- 🔧 **Config Validation** - Secure and type-safe environment variable validation using [Joi](https://github.com/hapijs/joi).
+- 🐳 **Docker Integration** - One-command local development using `docker-compose` for PostgreSQL and all dependencies.
+- 🔄 **GitHub Actions CI** - Continuous integration for linting, building, and testing.
+- 🏊 **Connection Pooling** - Optimized PostgreSQL connection handling for concurrency and reliability.
+- 🧪 **Testing** - End-to-end and unit tests with Jest for all major features.
+- 🤖 **GraphQL Codegen** - Automatic type generation for your schema and resolvers.
+- 🛡️ **Rate Limiting** - Express rate limiting for API abuse prevention.
+- 🔐 **GraphQL Query Security** - Limits on query depth and computational cost.
 
 ## Project Structure
 
@@ -38,6 +31,119 @@ A production-ready [PostGraphile 5](https://grafast.org/postgraphile/) GraphQL A
 │   ├── gql/                 # PostGraphile preset and plugins
 │   └── utils/               # Shared utilities (logger, config, health checks)
 ```
+
+## Database Schema Overview
+
+The forum system uses several main tables and security patterns to provide a robust, extensible backend.
+
+### 1. Users (`app_public.users`)
+Stores forum users (including admins).
+
+| Column      | Type           | Description                       |
+|-------------|----------------|-----------------------------------|
+| id          | SERIAL PK      | Unique user identifier            |
+| username    | CITEXT         | Public handle, unique             |
+| name        | TEXT           | Public name or pseudonym          |
+| avatar_url  | TEXT           | Avatar image URL (optional)       |
+| is_admin    | BOOLEAN        | Admin privileges                  |
+| created_at  | TIMESTAMPTZ    | Creation timestamp                |
+| updated_at  | TIMESTAMPTZ    | Last update timestamp             |
+
+**Triggers:**  
+- `_100_timestamps`: Automatically manages `created_at` and `updated_at` on insert/update.  
+- `_200_make_first_user_admin`: First registered user is made admin.  
+
+**Row Level Security & Policies:**  
+- Only users can update/delete their own data.
+- Admin status enforced for critical actions.
+- Most queries are restricted for privacy.
+
+### 2. Forums (`app_public.forums`)
+Defines forums as subject-based categories for topics.
+
+| Column      | Type           | Description                       |
+|-------------|----------------|-----------------------------------|
+| id          | SERIAL PK      | Forum identifier                  |
+| slug        | TEXT           | Unique, URL-friendly alias        |
+| name        | TEXT           | Display name                      |
+| description | TEXT           | Forum description                 |
+| created_at  | TIMESTAMPTZ    | Creation timestamp                |
+| updated_at  | TIMESTAMPTZ    | Update timestamp                  |
+
+**Triggers:**  
+- `_100_timestamps`: For maintaining timestamps.
+
+**Row Level Security & Policies:**  
+- Admins required for insert/update/delete.
+- All users may read forums.
+
+### 3. Topics (`app_public.topics`)
+Stores threads authored by users within forums.
+
+| Column      | Type         | Description                                              |
+|-------------|--------------|---------------------------------------------------------|
+| id          | SERIAL PK    | Topic identifier                                        |
+| forum_id    | INT FK       | References parent forum                                 |
+| author_id   | INT FK       | References user, defaults to current logged in user     |
+| title       | TEXT         | Topic headline                                          |
+| body        | TEXT         | Initial post content                                    |
+| created_at  | TIMESTAMPTZ  | Created timestamp                                       |
+| updated_at  | TIMESTAMPTZ  | Last update timestamp                                   |
+
+**Triggers:**  
+- `_100_timestamps`: Maintains timestamps.
+
+**Row Level Security & Policies:**  
+- Select: Allowed for all.
+- Mutations: Custom to user role.
+
+### 4. Posts (`app_public.posts`)
+Individual replies in topics.
+
+| Column      | Type         | Description                                              |
+|-------------|--------------|---------------------------------------------------------|
+| id          | SERIAL PK    | Post identifier                                         |
+| topic_id    | INT FK       | References topic                                        |
+| author_id   | INT FK       | References posting user                                 |
+| body        | TEXT         | Post content                                            |
+| created_at  | TIMESTAMPTZ  | Created timestamp                                       |
+| updated_at  | TIMESTAMPTZ  | Last update timestamp                                   |
+
+**Indices for performance:**  
+- `topics_forum_id`, `topics_author_id`, `posts_author_id`, `posts_topic_id` for fast lookup.
+
+### Example Initialization (from migrations)
+
+Initial demo data for forums, topics, and posts:
+
+```sql
+insert into app_public.forums(slug, name, description) values
+  ('testimonials', 'Testimonials', 'How do you rate PostGraphile?'),
+  ('feedback', 'Feedback', 'How are you finding PostGraphile?'),
+  ('cat-life', 'Cat Life', 'A forum all about cats and cat stories'),
+  ('cat-help', 'Cat Help', 'Advice for troublesome cats');
+
+insert into app_public.topics(forum_id, author_id, title, body) values
+  (1, 2, 'Thank you!', '500-1500 requests per second on a single server is pretty awesome.'),
+  (1, 4, 'PostGraphile is powerful', 'PostGraphile is powerful and elegant.'),
+  (3, 1, 'I love cats!', 'They''re the best!');
+
+insert into app_public.posts(topic_id, author_id, body) values
+  (1, 1, 'Super pleased with the performance - thanks!'),
+  (2, 1, 'Thanks so much!'),
+  (4, 1, 'Don''t you just love cats?');
+```
+
+### Core Triggers & Security
+
+- All core tables have timestamp triggers to maintain audit consistency.
+- Policies based on current user ID and admin status restrict data access,
+  providing a safe multi-user environment.
+- Additional RLS and trigger logic in committed migrations ensures jobs/tasks
+  are tracked, performance is optimized, and no sensitive data is exposed in GraphQL.
+
+**See ["libs/database/migrations/committed"](https://github.com/dhananjay-jadhav/forum/tree/main/libs/database/migrations/committed) for the complete schema history and advanced logic.**
+
 
 ## Quick Start
 
