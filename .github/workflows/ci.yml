@@ -71,6 +71,9 @@ jobs:
             - name: Run e2e tests
               run: yarn e2e api-e2e --skip-nx-cache
 
+            - name: Ran DB:migrate
+              run: yarn db:migrate
+
             - name: Stop PostgreSQL
               if: always()
               run: docker compose down -v
