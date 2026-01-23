@@ -12,7 +12,7 @@ module.exports = {
 
     // Shadow database is used to verify migrations can be run cleanly.
     shadowConnectionString:
-        process.env.DATABASE_SHADOW_URL || 'postgres://postgres:password@localhost:5432/postgres_shadow',
+        process.env.DATABASE_SHADOW_URL || 'postgres://postgres:password@localhost:5432/forum_shadow',
 
     // Root connection string for creating/dropping shadow database.
     // Uses template1 database as it always exists and is different from our app database.
