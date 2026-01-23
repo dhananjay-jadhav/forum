@@ -1,6 +1,21 @@
-# NX Forum
+# Forum Management System
 
-A real-world web forum application built with [PostGraphile 4](https://www.graphile.org/postgraphile/) for rapidly generating a robust GraphQL API from your PostgreSQL schema. The project leverages [Nx](https://nx.dev) for modular development, Express.js for the backend API, and advanced database migrations to model forums, users, topics, and posts.
+## Product Information
+
+**Forum Management System** is a modern, scalable platform for creating and managing online communities, support channels, or discussion groups. It enables users to register, participate in structured forums, create topics, post replies, and collaborate securely. Powered by PostgreSQL and PostGraphile 4, it provides an instant, robust GraphQL API, advanced security, and full administrative control.
+
+## Functional Information
+
+- User registration with profile management
+- Creation and moderation of multiple forums
+- Topic/thread posting and organized replies
+- Role-based access for users and admins
+- Secure, PostgreSQL-backed data with row-level security
+- Auto-generated GraphQL API for flexible integrations
+- Health checks and CI/CD-ready deployments
+- Easily extensible and fully tested
+
+Forum Management System is ideal for communities, organizations, and projects seeking a reliable, feature-rich platform for user-driven discussions.
 
 ## Features
 
