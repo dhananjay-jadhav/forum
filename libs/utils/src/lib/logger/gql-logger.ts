@@ -36,7 +36,7 @@ const isGraphQLRequest = (req: IncomingMessage): boolean => {
  *
  * @see libs/gql/src/lib/plugins/logging.plugin.ts for GraphQL operation logging
  */
-const SKIP_LOGGING_PATTERNS = ['/graphql', '/graphiql', '/health', '/ready', '/live'];
+const SKIP_LOGGING_PATTERNS = ['/graphiql', '/health', '/ready', '/live'];
 
 const shouldSkipLogging = (url: string): boolean => SKIP_LOGGING_PATTERNS.some((pattern) => url.includes(pattern));
 

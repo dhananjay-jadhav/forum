@@ -1,9 +1,9 @@
-import { LoggingPlugin, QueryValidationPlugin } from '@app/gql';
+import { QueryValidationPlugin } from '@app/gql';
 import { env, logger } from '@app/utils';
 import PgSimplifyInflectorPlugin from '@graphile-contrib/pg-simplify-inflector';
 import { makePluginHook, PostGraphileOptions } from 'postgraphile';
 
-const pluginHook = makePluginHook([QueryValidationPlugin, LoggingPlugin]);
+const pluginHook = makePluginHook([QueryValidationPlugin]);
 
 export const postGraphileOptions: PostGraphileOptions = {
     pluginHook,
