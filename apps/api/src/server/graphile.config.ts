@@ -25,8 +25,7 @@ export const postGraphileOptions: PostGraphileOptions = {
     graphiql: env.isDevelopment,
     enhanceGraphiql: env.isDevelopment,
     allowExplain() {
-        // TODO: customise condition!
-        return true;
+        return env.isDevelopment;
     },
     enableQueryBatching: true,
     disableQueryLog: env.isDevelopment, // our default logging has performance issues, but do make sure you have a logging system in place!

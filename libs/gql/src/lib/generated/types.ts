@@ -19,40 +19,6 @@ export interface Scalars {
    * 8601](https://en.wikipedia.org/wiki/ISO_8601) standard. May or may not include a timezone.
    */
   Datetime: { input: string; output: string; }
-  /** The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf). */
-  JSON: { input: Record<string, unknown>; output: Record<string, unknown>; }
-}
-
-/** All input for the `completeJob` mutation. */
-export interface CompleteJobInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  jobId?: InputMaybe<Scalars['Int']['input']>;
-  workerId?: InputMaybe<Scalars['String']['input']>;
-}
-
-/** The output of our `completeJob` mutation. */
-export interface CompleteJobPayload {
-  __typename?: 'CompleteJobPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  job?: Maybe<Job>;
-  /** An edge for our `Job`. May be used by Relay 1. */
-  jobEdge?: Maybe<JobsEdge>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-}
-
-
-/** The output of our `completeJob` mutation. */
-export interface CompleteJobPayloadJobEdgeArgs {
-  orderBy?: InputMaybe<Array<JobsOrderBy>>;
 }
 
 /** All input for the create `Forum` mutation. */
@@ -86,72 +52,6 @@ export interface CreateForumPayload {
 /** The output of our create `Forum` mutation. */
 export interface CreateForumPayloadForumEdgeArgs {
   orderBy?: InputMaybe<Array<ForumsOrderBy>>;
-}
-
-/** All input for the create `Job` mutation. */
-export interface CreateJobInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The `Job` to be created by this mutation. */
-  job: JobInput;
-}
-
-/** The output of our create `Job` mutation. */
-export interface CreateJobPayload {
-  __typename?: 'CreateJobPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** The `Job` that was created by this mutation. */
-  job?: Maybe<Job>;
-  /** An edge for our `Job`. May be used by Relay 1. */
-  jobEdge?: Maybe<JobsEdge>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-}
-
-
-/** The output of our create `Job` mutation. */
-export interface CreateJobPayloadJobEdgeArgs {
-  orderBy?: InputMaybe<Array<JobsOrderBy>>;
-}
-
-/** All input for the create `JobQueue` mutation. */
-export interface CreateJobQueueInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The `JobQueue` to be created by this mutation. */
-  jobQueue: JobQueueInput;
-}
-
-/** The output of our create `JobQueue` mutation. */
-export interface CreateJobQueuePayload {
-  __typename?: 'CreateJobQueuePayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** The `JobQueue` that was created by this mutation. */
-  jobQueue?: Maybe<JobQueue>;
-  /** An edge for our `JobQueue`. May be used by Relay 1. */
-  jobQueueEdge?: Maybe<JobQueuesEdge>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-}
-
-
-/** The output of our create `JobQueue` mutation. */
-export interface CreateJobQueuePayloadJobQueueEdgeArgs {
-  orderBy?: InputMaybe<Array<JobQueuesOrderBy>>;
 }
 
 /** All input for the create `Post` mutation. */
@@ -261,41 +161,6 @@ export interface CreateUserAuthenticationPayloadUserAuthenticationEdgeArgs {
   orderBy?: InputMaybe<Array<UserAuthenticationsOrderBy>>;
 }
 
-/** All input for the create `UserAuthenticationSecret` mutation. */
-export interface CreateUserAuthenticationSecretInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The `UserAuthenticationSecret` to be created by this mutation. */
-  userAuthenticationSecret: UserAuthenticationSecretInput;
-}
-
-/** The output of our create `UserAuthenticationSecret` mutation. */
-export interface CreateUserAuthenticationSecretPayload {
-  __typename?: 'CreateUserAuthenticationSecretPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-  /** Reads a single `UserAuthentication` that is related to this `UserAuthenticationSecret`. */
-  userAuthentication?: Maybe<UserAuthentication>;
-  /** The `UserAuthenticationSecret` that was created by this mutation. */
-  userAuthenticationSecret?: Maybe<UserAuthenticationSecret>;
-  /** An edge for our `UserAuthenticationSecret`. May be used by Relay 1. */
-  userAuthenticationSecretEdge?: Maybe<UserAuthenticationSecretsEdge>;
-}
-
-
-/** The output of our create `UserAuthenticationSecret` mutation. */
-export interface CreateUserAuthenticationSecretPayloadUserAuthenticationSecretEdgeArgs {
-  orderBy?: InputMaybe<Array<UserAuthenticationSecretsOrderBy>>;
-}
-
 /** All input for the create `UserEmail` mutation. */
 export interface CreateUserEmailInput {
   /**
@@ -331,41 +196,6 @@ export interface CreateUserEmailPayloadUserEmailEdgeArgs {
   orderBy?: InputMaybe<Array<UserEmailsOrderBy>>;
 }
 
-/** All input for the create `UserEmailSecret` mutation. */
-export interface CreateUserEmailSecretInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The `UserEmailSecret` to be created by this mutation. */
-  userEmailSecret: UserEmailSecretInput;
-}
-
-/** The output of our create `UserEmailSecret` mutation. */
-export interface CreateUserEmailSecretPayload {
-  __typename?: 'CreateUserEmailSecretPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-  /** Reads a single `UserEmail` that is related to this `UserEmailSecret`. */
-  userEmail?: Maybe<UserEmail>;
-  /** The `UserEmailSecret` that was created by this mutation. */
-  userEmailSecret?: Maybe<UserEmailSecret>;
-  /** An edge for our `UserEmailSecret`. May be used by Relay 1. */
-  userEmailSecretEdge?: Maybe<UserEmailSecretsEdge>;
-}
-
-
-/** The output of our create `UserEmailSecret` mutation. */
-export interface CreateUserEmailSecretPayloadUserEmailSecretEdgeArgs {
-  orderBy?: InputMaybe<Array<UserEmailSecretsOrderBy>>;
-}
-
 /** All input for the create `User` mutation. */
 export interface CreateUserInput {
   /**
@@ -397,41 +227,6 @@ export interface CreateUserPayload {
 /** The output of our create `User` mutation. */
 export interface CreateUserPayloadUserEdgeArgs {
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
-}
-
-/** All input for the create `UserSecret` mutation. */
-export interface CreateUserSecretInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The `UserSecret` to be created by this mutation. */
-  userSecret: UserSecretInput;
-}
-
-/** The output of our create `UserSecret` mutation. */
-export interface CreateUserSecretPayload {
-  __typename?: 'CreateUserSecretPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-  /** Reads a single `User` that is related to this `UserSecret`. */
-  user?: Maybe<User>;
-  /** The `UserSecret` that was created by this mutation. */
-  userSecret?: Maybe<UserSecret>;
-  /** An edge for our `UserSecret`. May be used by Relay 1. */
-  userSecretEdge?: Maybe<UserSecretsEdge>;
-}
-
-
-/** The output of our create `UserSecret` mutation. */
-export interface CreateUserSecretPayloadUserSecretEdgeArgs {
-  orderBy?: InputMaybe<Array<UserSecretsOrderBy>>;
 }
 
 /** All input for the `deleteForumByNodeId` mutation. */
@@ -487,94 +282,6 @@ export interface DeleteForumPayload {
 /** The output of our delete `Forum` mutation. */
 export interface DeleteForumPayloadForumEdgeArgs {
   orderBy?: InputMaybe<Array<ForumsOrderBy>>;
-}
-
-/** All input for the `deleteJobByNodeId` mutation. */
-export interface DeleteJobByNodeIdInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The globally unique `ID` which will identify a single `Job` to be deleted. */
-  nodeId: Scalars['ID']['input'];
-}
-
-/** All input for the `deleteJob` mutation. */
-export interface DeleteJobInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  id: Scalars['Int']['input'];
-}
-
-/** The output of our delete `Job` mutation. */
-export interface DeleteJobPayload {
-  __typename?: 'DeleteJobPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  deletedJobNodeId?: Maybe<Scalars['ID']['output']>;
-  /** The `Job` that was deleted by this mutation. */
-  job?: Maybe<Job>;
-  /** An edge for our `Job`. May be used by Relay 1. */
-  jobEdge?: Maybe<JobsEdge>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-}
-
-
-/** The output of our delete `Job` mutation. */
-export interface DeleteJobPayloadJobEdgeArgs {
-  orderBy?: InputMaybe<Array<JobsOrderBy>>;
-}
-
-/** All input for the `deleteJobQueueByNodeId` mutation. */
-export interface DeleteJobQueueByNodeIdInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The globally unique `ID` which will identify a single `JobQueue` to be deleted. */
-  nodeId: Scalars['ID']['input'];
-}
-
-/** All input for the `deleteJobQueue` mutation. */
-export interface DeleteJobQueueInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  queueName: Scalars['String']['input'];
-}
-
-/** The output of our delete `JobQueue` mutation. */
-export interface DeleteJobQueuePayload {
-  __typename?: 'DeleteJobQueuePayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  deletedJobQueueNodeId?: Maybe<Scalars['ID']['output']>;
-  /** The `JobQueue` that was deleted by this mutation. */
-  jobQueue?: Maybe<JobQueue>;
-  /** An edge for our `JobQueue`. May be used by Relay 1. */
-  jobQueueEdge?: Maybe<JobQueuesEdge>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-}
-
-
-/** The output of our delete `JobQueue` mutation. */
-export interface DeleteJobQueuePayloadJobQueueEdgeArgs {
-  orderBy?: InputMaybe<Array<JobQueuesOrderBy>>;
 }
 
 /** All input for the `deletePostByNodeId` mutation. */
@@ -730,52 +437,6 @@ export interface DeleteUserAuthenticationPayloadUserAuthenticationEdgeArgs {
   orderBy?: InputMaybe<Array<UserAuthenticationsOrderBy>>;
 }
 
-/** All input for the `deleteUserAuthenticationSecretByNodeId` mutation. */
-export interface DeleteUserAuthenticationSecretByNodeIdInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The globally unique `ID` which will identify a single `UserAuthenticationSecret` to be deleted. */
-  nodeId: Scalars['ID']['input'];
-}
-
-/** All input for the `deleteUserAuthenticationSecret` mutation. */
-export interface DeleteUserAuthenticationSecretInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  userAuthenticationId: Scalars['Int']['input'];
-}
-
-/** The output of our delete `UserAuthenticationSecret` mutation. */
-export interface DeleteUserAuthenticationSecretPayload {
-  __typename?: 'DeleteUserAuthenticationSecretPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  deletedUserAuthenticationSecretNodeId?: Maybe<Scalars['ID']['output']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-  /** Reads a single `UserAuthentication` that is related to this `UserAuthenticationSecret`. */
-  userAuthentication?: Maybe<UserAuthentication>;
-  /** The `UserAuthenticationSecret` that was deleted by this mutation. */
-  userAuthenticationSecret?: Maybe<UserAuthenticationSecret>;
-  /** An edge for our `UserAuthenticationSecret`. May be used by Relay 1. */
-  userAuthenticationSecretEdge?: Maybe<UserAuthenticationSecretsEdge>;
-}
-
-
-/** The output of our delete `UserAuthenticationSecret` mutation. */
-export interface DeleteUserAuthenticationSecretPayloadUserAuthenticationSecretEdgeArgs {
-  orderBy?: InputMaybe<Array<UserAuthenticationSecretsOrderBy>>;
-}
-
 /** All input for the `deleteUserByNodeId` mutation. */
 export interface DeleteUserByNodeIdInput {
   /**
@@ -856,52 +517,6 @@ export interface DeleteUserEmailPayloadUserEmailEdgeArgs {
   orderBy?: InputMaybe<Array<UserEmailsOrderBy>>;
 }
 
-/** All input for the `deleteUserEmailSecretByNodeId` mutation. */
-export interface DeleteUserEmailSecretByNodeIdInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The globally unique `ID` which will identify a single `UserEmailSecret` to be deleted. */
-  nodeId: Scalars['ID']['input'];
-}
-
-/** All input for the `deleteUserEmailSecret` mutation. */
-export interface DeleteUserEmailSecretInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  userEmailId: Scalars['Int']['input'];
-}
-
-/** The output of our delete `UserEmailSecret` mutation. */
-export interface DeleteUserEmailSecretPayload {
-  __typename?: 'DeleteUserEmailSecretPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  deletedUserEmailSecretNodeId?: Maybe<Scalars['ID']['output']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-  /** Reads a single `UserEmail` that is related to this `UserEmailSecret`. */
-  userEmail?: Maybe<UserEmail>;
-  /** The `UserEmailSecret` that was deleted by this mutation. */
-  userEmailSecret?: Maybe<UserEmailSecret>;
-  /** An edge for our `UserEmailSecret`. May be used by Relay 1. */
-  userEmailSecretEdge?: Maybe<UserEmailSecretsEdge>;
-}
-
-
-/** The output of our delete `UserEmailSecret` mutation. */
-export interface DeleteUserEmailSecretPayloadUserEmailSecretEdgeArgs {
-  orderBy?: InputMaybe<Array<UserEmailSecretsOrderBy>>;
-}
-
 /** All input for the `deleteUser` mutation. */
 export interface DeleteUserInput {
   /**
@@ -934,85 +549,6 @@ export interface DeleteUserPayload {
 /** The output of our delete `User` mutation. */
 export interface DeleteUserPayloadUserEdgeArgs {
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
-}
-
-/** All input for the `deleteUserSecretByNodeId` mutation. */
-export interface DeleteUserSecretByNodeIdInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The globally unique `ID` which will identify a single `UserSecret` to be deleted. */
-  nodeId: Scalars['ID']['input'];
-}
-
-/** All input for the `deleteUserSecret` mutation. */
-export interface DeleteUserSecretInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  userId: Scalars['Int']['input'];
-}
-
-/** The output of our delete `UserSecret` mutation. */
-export interface DeleteUserSecretPayload {
-  __typename?: 'DeleteUserSecretPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  deletedUserSecretNodeId?: Maybe<Scalars['ID']['output']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-  /** Reads a single `User` that is related to this `UserSecret`. */
-  user?: Maybe<User>;
-  /** The `UserSecret` that was deleted by this mutation. */
-  userSecret?: Maybe<UserSecret>;
-  /** An edge for our `UserSecret`. May be used by Relay 1. */
-  userSecretEdge?: Maybe<UserSecretsEdge>;
-}
-
-
-/** The output of our delete `UserSecret` mutation. */
-export interface DeleteUserSecretPayloadUserSecretEdgeArgs {
-  orderBy?: InputMaybe<Array<UserSecretsOrderBy>>;
-}
-
-/** All input for the `failJob` mutation. */
-export interface FailJobInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  errorMessage?: InputMaybe<Scalars['String']['input']>;
-  jobId?: InputMaybe<Scalars['Int']['input']>;
-  workerId?: InputMaybe<Scalars['String']['input']>;
-}
-
-/** The output of our `failJob` mutation. */
-export interface FailJobPayload {
-  __typename?: 'FailJobPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  job?: Maybe<Job>;
-  /** An edge for our `Job`. May be used by Relay 1. */
-  jobEdge?: Maybe<JobsEdge>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-}
-
-
-/** The output of our `failJob` mutation. */
-export interface FailJobPayloadJobEdgeArgs {
-  orderBy?: InputMaybe<Array<JobsOrderBy>>;
 }
 
 /** All input for the `forgotPassword` mutation. */
@@ -1134,260 +670,11 @@ export type ForumsOrderBy =
   | 'SLUG_ASC'
   | 'SLUG_DESC';
 
-/** All input for the `getJob` mutation. */
-export interface GetJobInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  identifiers?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
-  workerId?: InputMaybe<Scalars['String']['input']>;
-}
-
-/** The output of our `getJob` mutation. */
-export interface GetJobPayload {
-  __typename?: 'GetJobPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  job?: Maybe<Job>;
-  /** An edge for our `Job`. May be used by Relay 1. */
-  jobEdge?: Maybe<JobsEdge>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-}
-
-
-/** The output of our `getJob` mutation. */
-export interface GetJobPayloadJobEdgeArgs {
-  orderBy?: InputMaybe<Array<JobsOrderBy>>;
-}
-
-export interface Job extends Node {
-  __typename?: 'Job';
-  attempts: Scalars['Int']['output'];
-  createdAt: Scalars['Datetime']['output'];
-  id: Scalars['Int']['output'];
-  lastError?: Maybe<Scalars['String']['output']>;
-  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
-  nodeId: Scalars['ID']['output'];
-  payload: Scalars['JSON']['output'];
-  priority: Scalars['Int']['output'];
-  queueName: Scalars['String']['output'];
-  runAt: Scalars['Datetime']['output'];
-  taskIdentifier: Scalars['String']['output'];
-  updatedAt: Scalars['Datetime']['output'];
-}
-
-/** A condition to be used against `Job` object types. All fields are tested for equality and combined with a logical ‘and.’ */
-export interface JobCondition {
-  /** Checks for equality with the object’s `id` field. */
-  id?: InputMaybe<Scalars['Int']['input']>;
-}
-
-/** An input for mutations affecting `Job` */
-export interface JobInput {
-  attempts?: InputMaybe<Scalars['Int']['input']>;
-  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
-  lastError?: InputMaybe<Scalars['String']['input']>;
-  payload?: InputMaybe<Scalars['JSON']['input']>;
-  priority?: InputMaybe<Scalars['Int']['input']>;
-  queueName?: InputMaybe<Scalars['String']['input']>;
-  runAt?: InputMaybe<Scalars['Datetime']['input']>;
-  taskIdentifier: Scalars['String']['input'];
-  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
-}
-
-/** Represents an update to a `Job`. Fields that are set will be updated. */
-export interface JobPatch {
-  attempts?: InputMaybe<Scalars['Int']['input']>;
-  createdAt?: InputMaybe<Scalars['Datetime']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
-  lastError?: InputMaybe<Scalars['String']['input']>;
-  payload?: InputMaybe<Scalars['JSON']['input']>;
-  priority?: InputMaybe<Scalars['Int']['input']>;
-  queueName?: InputMaybe<Scalars['String']['input']>;
-  runAt?: InputMaybe<Scalars['Datetime']['input']>;
-  taskIdentifier?: InputMaybe<Scalars['String']['input']>;
-  updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
-}
-
-export interface JobQueue extends Node {
-  __typename?: 'JobQueue';
-  jobCount: Scalars['Int']['output'];
-  lockedAt?: Maybe<Scalars['Datetime']['output']>;
-  lockedBy?: Maybe<Scalars['String']['output']>;
-  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
-  nodeId: Scalars['ID']['output'];
-  queueName: Scalars['String']['output'];
-}
-
-/**
- * A condition to be used against `JobQueue` object types. All fields are tested
- * for equality and combined with a logical ‘and.’
- */
-export interface JobQueueCondition {
-  /** Checks for equality with the object’s `queueName` field. */
-  queueName?: InputMaybe<Scalars['String']['input']>;
-}
-
-/** An input for mutations affecting `JobQueue` */
-export interface JobQueueInput {
-  jobCount?: InputMaybe<Scalars['Int']['input']>;
-  lockedAt?: InputMaybe<Scalars['Datetime']['input']>;
-  lockedBy?: InputMaybe<Scalars['String']['input']>;
-  queueName: Scalars['String']['input'];
-}
-
-/** Represents an update to a `JobQueue`. Fields that are set will be updated. */
-export interface JobQueuePatch {
-  jobCount?: InputMaybe<Scalars['Int']['input']>;
-  lockedAt?: InputMaybe<Scalars['Datetime']['input']>;
-  lockedBy?: InputMaybe<Scalars['String']['input']>;
-  queueName?: InputMaybe<Scalars['String']['input']>;
-}
-
-/** A connection to a list of `JobQueue` values. */
-export interface JobQueuesConnection {
-  __typename?: 'JobQueuesConnection';
-  /** A list of edges which contains the `JobQueue` and cursor to aid in pagination. */
-  edges: Array<JobQueuesEdge>;
-  /** A list of `JobQueue` objects. */
-  nodes: Array<JobQueue>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** The count of *all* `JobQueue` you could get from the connection. */
-  totalCount: Scalars['Int']['output'];
-}
-
-/** A `JobQueue` edge in the connection. */
-export interface JobQueuesEdge {
-  __typename?: 'JobQueuesEdge';
-  /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  /** The `JobQueue` at the end of the edge. */
-  node: JobQueue;
-}
-
-/** Methods to use when ordering `JobQueue`. */
-export type JobQueuesOrderBy =
-  | 'NATURAL'
-  | 'PRIMARY_KEY_ASC'
-  | 'PRIMARY_KEY_DESC'
-  | 'QUEUE_NAME_ASC'
-  | 'QUEUE_NAME_DESC';
-
-/** A connection to a list of `Job` values. */
-export interface JobsConnection {
-  __typename?: 'JobsConnection';
-  /** A list of edges which contains the `Job` and cursor to aid in pagination. */
-  edges: Array<JobsEdge>;
-  /** A list of `Job` objects. */
-  nodes: Array<Job>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** The count of *all* `Job` you could get from the connection. */
-  totalCount: Scalars['Int']['output'];
-}
-
-/** A `Job` edge in the connection. */
-export interface JobsEdge {
-  __typename?: 'JobsEdge';
-  /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  /** The `Job` at the end of the edge. */
-  node: Job;
-}
-
-/** Methods to use when ordering `Job`. */
-export type JobsOrderBy =
-  | 'ID_ASC'
-  | 'ID_DESC'
-  | 'NATURAL'
-  | 'PRIMARY_KEY_ASC'
-  | 'PRIMARY_KEY_DESC';
-
-/** All input for the `linkOrRegisterUser` mutation. */
-export interface LinkOrRegisterUserInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  fAuthDetails?: InputMaybe<Scalars['JSON']['input']>;
-  fIdentifier?: InputMaybe<Scalars['String']['input']>;
-  fProfile?: InputMaybe<Scalars['JSON']['input']>;
-  fService?: InputMaybe<Scalars['String']['input']>;
-  fUserId?: InputMaybe<Scalars['Int']['input']>;
-}
-
-/** The output of our `linkOrRegisterUser` mutation. */
-export interface LinkOrRegisterUserPayload {
-  __typename?: 'LinkOrRegisterUserPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-  user?: Maybe<User>;
-  /** An edge for our `User`. May be used by Relay 1. */
-  userEdge?: Maybe<UsersEdge>;
-}
-
-
-/** The output of our `linkOrRegisterUser` mutation. */
-export interface LinkOrRegisterUserPayloadUserEdgeArgs {
-  orderBy?: InputMaybe<Array<UsersOrderBy>>;
-}
-
-/** All input for the `login` mutation. */
-export interface LoginInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  password: Scalars['String']['input'];
-  username: Scalars['String']['input'];
-}
-
-/** The output of our `login` mutation. */
-export interface LoginPayload {
-  __typename?: 'LoginPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-  user?: Maybe<User>;
-  /** An edge for our `User`. May be used by Relay 1. */
-  userEdge?: Maybe<UsersEdge>;
-}
-
-
-/** The output of our `login` mutation. */
-export interface LoginPayloadUserEdgeArgs {
-  orderBy?: InputMaybe<Array<UsersOrderBy>>;
-}
-
 /** The root mutation type which contains root level fields which mutate data. */
 export interface Mutation {
   __typename?: 'Mutation';
-  completeJob?: Maybe<CompleteJobPayload>;
   /** Creates a single `Forum`. */
   createForum?: Maybe<CreateForumPayload>;
-  /** Creates a single `Job`. */
-  createJob?: Maybe<CreateJobPayload>;
-  /** Creates a single `JobQueue`. */
-  createJobQueue?: Maybe<CreateJobQueuePayload>;
   /** Creates a single `Post`. */
   createPost?: Maybe<CreatePostPayload>;
   /** Creates a single `Topic`. */
@@ -1396,28 +683,14 @@ export interface Mutation {
   createUser?: Maybe<CreateUserPayload>;
   /** Creates a single `UserAuthentication`. */
   createUserAuthentication?: Maybe<CreateUserAuthenticationPayload>;
-  /** Creates a single `UserAuthenticationSecret`. */
-  createUserAuthenticationSecret?: Maybe<CreateUserAuthenticationSecretPayload>;
   /** Creates a single `UserEmail`. */
   createUserEmail?: Maybe<CreateUserEmailPayload>;
-  /** Creates a single `UserEmailSecret`. */
-  createUserEmailSecret?: Maybe<CreateUserEmailSecretPayload>;
-  /** Creates a single `UserSecret`. */
-  createUserSecret?: Maybe<CreateUserSecretPayload>;
   /** Deletes a single `Forum` using a unique key. */
   deleteForum?: Maybe<DeleteForumPayload>;
   /** Deletes a single `Forum` using its globally unique id. */
   deleteForumByNodeId?: Maybe<DeleteForumPayload>;
   /** Deletes a single `Forum` using a unique key. */
   deleteForumBySlug?: Maybe<DeleteForumPayload>;
-  /** Deletes a single `Job` using a unique key. */
-  deleteJob?: Maybe<DeleteJobPayload>;
-  /** Deletes a single `Job` using its globally unique id. */
-  deleteJobByNodeId?: Maybe<DeleteJobPayload>;
-  /** Deletes a single `JobQueue` using a unique key. */
-  deleteJobQueue?: Maybe<DeleteJobQueuePayload>;
-  /** Deletes a single `JobQueue` using its globally unique id. */
-  deleteJobQueueByNodeId?: Maybe<DeleteJobQueuePayload>;
   /** Deletes a single `Post` using a unique key. */
   deletePost?: Maybe<DeletePostPayload>;
   /** Deletes a single `Post` using its globally unique id. */
@@ -1434,10 +707,6 @@ export interface Mutation {
   deleteUserAuthenticationByNodeId?: Maybe<DeleteUserAuthenticationPayload>;
   /** Deletes a single `UserAuthentication` using a unique key. */
   deleteUserAuthenticationByServiceAndIdentifier?: Maybe<DeleteUserAuthenticationPayload>;
-  /** Deletes a single `UserAuthenticationSecret` using a unique key. */
-  deleteUserAuthenticationSecret?: Maybe<DeleteUserAuthenticationSecretPayload>;
-  /** Deletes a single `UserAuthenticationSecret` using its globally unique id. */
-  deleteUserAuthenticationSecretByNodeId?: Maybe<DeleteUserAuthenticationSecretPayload>;
   /** Deletes a single `User` using its globally unique id. */
   deleteUserByNodeId?: Maybe<DeleteUserPayload>;
   /** Deletes a single `User` using a unique key. */
@@ -1448,43 +717,16 @@ export interface Mutation {
   deleteUserEmailByNodeId?: Maybe<DeleteUserEmailPayload>;
   /** Deletes a single `UserEmail` using a unique key. */
   deleteUserEmailByUserIdAndEmail?: Maybe<DeleteUserEmailPayload>;
-  /** Deletes a single `UserEmailSecret` using a unique key. */
-  deleteUserEmailSecret?: Maybe<DeleteUserEmailSecretPayload>;
-  /** Deletes a single `UserEmailSecret` using its globally unique id. */
-  deleteUserEmailSecretByNodeId?: Maybe<DeleteUserEmailSecretPayload>;
-  /** Deletes a single `UserSecret` using a unique key. */
-  deleteUserSecret?: Maybe<DeleteUserSecretPayload>;
-  /** Deletes a single `UserSecret` using its globally unique id. */
-  deleteUserSecretByNodeId?: Maybe<DeleteUserSecretPayload>;
-  failJob?: Maybe<FailJobPayload>;
   /** If you've forgotten your password, give us one of your email addresses and we' send you a reset token. Note this only works if you have added an email address! */
   forgotPassword?: Maybe<ForgotPasswordPayload>;
-  getJob?: Maybe<GetJobPayload>;
-  /** If you're logged in, this will link an additional OAuth login to your account if necessary. If you're logged out it may find if an account already exists (based on OAuth details or email address) and return that, or create a new user account if necessary. */
-  linkOrRegisterUser?: Maybe<LinkOrRegisterUserPayload>;
-  /** Returns a user that matches the username/password combo, or null on failure. */
-  login?: Maybe<LoginPayload>;
-  /** Creates a user account. All arguments are optional, it trusts the calling method to perform sanitisation. */
-  reallyCreateUser?: Maybe<ReallyCreateUserPayload>;
-  /** Used to register a user from information gleaned from OAuth. Primarily used by link_or_register_user */
-  registerUser?: Maybe<RegisterUserPayload>;
   /** After triggering forgotPassword, you'll be sent a reset token. Combine this with your user ID and a new password to reset your password. */
   resetPassword?: Maybe<ResetPasswordPayload>;
-  scheduleJob?: Maybe<ScheduleJobPayload>;
   /** Updates a single `Forum` using a unique key and a patch. */
   updateForum?: Maybe<UpdateForumPayload>;
   /** Updates a single `Forum` using its globally unique id and a patch. */
   updateForumByNodeId?: Maybe<UpdateForumPayload>;
   /** Updates a single `Forum` using a unique key and a patch. */
   updateForumBySlug?: Maybe<UpdateForumPayload>;
-  /** Updates a single `Job` using a unique key and a patch. */
-  updateJob?: Maybe<UpdateJobPayload>;
-  /** Updates a single `Job` using its globally unique id and a patch. */
-  updateJobByNodeId?: Maybe<UpdateJobPayload>;
-  /** Updates a single `JobQueue` using a unique key and a patch. */
-  updateJobQueue?: Maybe<UpdateJobQueuePayload>;
-  /** Updates a single `JobQueue` using its globally unique id and a patch. */
-  updateJobQueueByNodeId?: Maybe<UpdateJobQueuePayload>;
   /** Updates a single `Post` using a unique key and a patch. */
   updatePost?: Maybe<UpdatePostPayload>;
   /** Updates a single `Post` using its globally unique id and a patch. */
@@ -1501,10 +743,6 @@ export interface Mutation {
   updateUserAuthenticationByNodeId?: Maybe<UpdateUserAuthenticationPayload>;
   /** Updates a single `UserAuthentication` using a unique key and a patch. */
   updateUserAuthenticationByServiceAndIdentifier?: Maybe<UpdateUserAuthenticationPayload>;
-  /** Updates a single `UserAuthenticationSecret` using a unique key and a patch. */
-  updateUserAuthenticationSecret?: Maybe<UpdateUserAuthenticationSecretPayload>;
-  /** Updates a single `UserAuthenticationSecret` using its globally unique id and a patch. */
-  updateUserAuthenticationSecretByNodeId?: Maybe<UpdateUserAuthenticationSecretPayload>;
   /** Updates a single `User` using its globally unique id and a patch. */
   updateUserByNodeId?: Maybe<UpdateUserPayload>;
   /** Updates a single `User` using a unique key and a patch. */
@@ -1515,38 +753,12 @@ export interface Mutation {
   updateUserEmailByNodeId?: Maybe<UpdateUserEmailPayload>;
   /** Updates a single `UserEmail` using a unique key and a patch. */
   updateUserEmailByUserIdAndEmail?: Maybe<UpdateUserEmailPayload>;
-  /** Updates a single `UserEmailSecret` using a unique key and a patch. */
-  updateUserEmailSecret?: Maybe<UpdateUserEmailSecretPayload>;
-  /** Updates a single `UserEmailSecret` using its globally unique id and a patch. */
-  updateUserEmailSecretByNodeId?: Maybe<UpdateUserEmailSecretPayload>;
-  /** Updates a single `UserSecret` using a unique key and a patch. */
-  updateUserSecret?: Maybe<UpdateUserSecretPayload>;
-  /** Updates a single `UserSecret` using its globally unique id and a patch. */
-  updateUserSecretByNodeId?: Maybe<UpdateUserSecretPayload>;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationCompleteJobArgs {
-  input: CompleteJobInput;
 }
 
 
 /** The root mutation type which contains root level fields which mutate data. */
 export interface MutationCreateForumArgs {
   input: CreateForumInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationCreateJobArgs {
-  input: CreateJobInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationCreateJobQueueArgs {
-  input: CreateJobQueueInput;
 }
 
 
@@ -1575,26 +787,8 @@ export interface MutationCreateUserAuthenticationArgs {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
-export interface MutationCreateUserAuthenticationSecretArgs {
-  input: CreateUserAuthenticationSecretInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
 export interface MutationCreateUserEmailArgs {
   input: CreateUserEmailInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationCreateUserEmailSecretArgs {
-  input: CreateUserEmailSecretInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationCreateUserSecretArgs {
-  input: CreateUserSecretInput;
 }
 
 
@@ -1613,30 +807,6 @@ export interface MutationDeleteForumByNodeIdArgs {
 /** The root mutation type which contains root level fields which mutate data. */
 export interface MutationDeleteForumBySlugArgs {
   input: DeleteForumBySlugInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationDeleteJobArgs {
-  input: DeleteJobInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationDeleteJobByNodeIdArgs {
-  input: DeleteJobByNodeIdInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationDeleteJobQueueArgs {
-  input: DeleteJobQueueInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationDeleteJobQueueByNodeIdArgs {
-  input: DeleteJobQueueByNodeIdInput;
 }
 
 
@@ -1689,18 +859,6 @@ export interface MutationDeleteUserAuthenticationByServiceAndIdentifierArgs {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
-export interface MutationDeleteUserAuthenticationSecretArgs {
-  input: DeleteUserAuthenticationSecretInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationDeleteUserAuthenticationSecretByNodeIdArgs {
-  input: DeleteUserAuthenticationSecretByNodeIdInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
 export interface MutationDeleteUserByNodeIdArgs {
   input: DeleteUserByNodeIdInput;
 }
@@ -1731,80 +889,14 @@ export interface MutationDeleteUserEmailByUserIdAndEmailArgs {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
-export interface MutationDeleteUserEmailSecretArgs {
-  input: DeleteUserEmailSecretInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationDeleteUserEmailSecretByNodeIdArgs {
-  input: DeleteUserEmailSecretByNodeIdInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationDeleteUserSecretArgs {
-  input: DeleteUserSecretInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationDeleteUserSecretByNodeIdArgs {
-  input: DeleteUserSecretByNodeIdInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationFailJobArgs {
-  input: FailJobInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
 export interface MutationForgotPasswordArgs {
   input: ForgotPasswordInput;
 }
 
 
 /** The root mutation type which contains root level fields which mutate data. */
-export interface MutationGetJobArgs {
-  input: GetJobInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationLinkOrRegisterUserArgs {
-  input: LinkOrRegisterUserInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationLoginArgs {
-  input: LoginInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationReallyCreateUserArgs {
-  input: ReallyCreateUserInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationRegisterUserArgs {
-  input: RegisterUserInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
 export interface MutationResetPasswordArgs {
   input: ResetPasswordInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationScheduleJobArgs {
-  input: ScheduleJobInput;
 }
 
 
@@ -1823,30 +915,6 @@ export interface MutationUpdateForumByNodeIdArgs {
 /** The root mutation type which contains root level fields which mutate data. */
 export interface MutationUpdateForumBySlugArgs {
   input: UpdateForumBySlugInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationUpdateJobArgs {
-  input: UpdateJobInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationUpdateJobByNodeIdArgs {
-  input: UpdateJobByNodeIdInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationUpdateJobQueueArgs {
-  input: UpdateJobQueueInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationUpdateJobQueueByNodeIdArgs {
-  input: UpdateJobQueueByNodeIdInput;
 }
 
 
@@ -1899,18 +967,6 @@ export interface MutationUpdateUserAuthenticationByServiceAndIdentifierArgs {
 
 
 /** The root mutation type which contains root level fields which mutate data. */
-export interface MutationUpdateUserAuthenticationSecretArgs {
-  input: UpdateUserAuthenticationSecretInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationUpdateUserAuthenticationSecretByNodeIdArgs {
-  input: UpdateUserAuthenticationSecretByNodeIdInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
 export interface MutationUpdateUserByNodeIdArgs {
   input: UpdateUserByNodeIdInput;
 }
@@ -1937,30 +993,6 @@ export interface MutationUpdateUserEmailByNodeIdArgs {
 /** The root mutation type which contains root level fields which mutate data. */
 export interface MutationUpdateUserEmailByUserIdAndEmailArgs {
   input: UpdateUserEmailByUserIdAndEmailInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationUpdateUserEmailSecretArgs {
-  input: UpdateUserEmailSecretInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationUpdateUserEmailSecretByNodeIdArgs {
-  input: UpdateUserEmailSecretByNodeIdInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationUpdateUserSecretArgs {
-  input: UpdateUserSecretInput;
-}
-
-
-/** The root mutation type which contains root level fields which mutate data. */
-export interface MutationUpdateUserSecretByNodeIdArgs {
-  input: UpdateUserSecretByNodeIdInput;
 }
 
 /** An object with a globally unique `ID`. */
@@ -2069,16 +1101,6 @@ export interface Query extends Node {
   forums?: Maybe<ForumsConnection>;
   /** Reads and enables pagination through a set of `Forum`. */
   forumsAboutCats?: Maybe<ForumsConnection>;
-  job?: Maybe<Job>;
-  /** Reads a single `Job` using its globally unique `ID`. */
-  jobByNodeId?: Maybe<Job>;
-  jobQueue?: Maybe<JobQueue>;
-  /** Reads a single `JobQueue` using its globally unique `ID`. */
-  jobQueueByNodeId?: Maybe<JobQueue>;
-  /** Reads and enables pagination through a set of `JobQueue`. */
-  jobQueues?: Maybe<JobQueuesConnection>;
-  /** Reads and enables pagination through a set of `Job`. */
-  jobs?: Maybe<JobsConnection>;
   /** Fetches an object given its globally unique `ID`. */
   node?: Maybe<Node>;
   /** The root query type must be a `Node` to work well with Relay 1 mutations. This just resolves to `query`. */
@@ -2101,11 +1123,6 @@ export interface Query extends Node {
   /** Reads a single `UserAuthentication` using its globally unique `ID`. */
   userAuthenticationByNodeId?: Maybe<UserAuthentication>;
   userAuthenticationByServiceAndIdentifier?: Maybe<UserAuthentication>;
-  userAuthenticationSecret?: Maybe<UserAuthenticationSecret>;
-  /** Reads a single `UserAuthenticationSecret` using its globally unique `ID`. */
-  userAuthenticationSecretByNodeId?: Maybe<UserAuthenticationSecret>;
-  /** Reads and enables pagination through a set of `UserAuthenticationSecret`. */
-  userAuthenticationSecrets?: Maybe<UserAuthenticationSecretsConnection>;
   /** Reads a single `User` using its globally unique `ID`. */
   userByNodeId?: Maybe<User>;
   userByUsername?: Maybe<User>;
@@ -2113,16 +1130,6 @@ export interface Query extends Node {
   /** Reads a single `UserEmail` using its globally unique `ID`. */
   userEmailByNodeId?: Maybe<UserEmail>;
   userEmailByUserIdAndEmail?: Maybe<UserEmail>;
-  userEmailSecret?: Maybe<UserEmailSecret>;
-  /** Reads a single `UserEmailSecret` using its globally unique `ID`. */
-  userEmailSecretByNodeId?: Maybe<UserEmailSecret>;
-  /** Reads and enables pagination through a set of `UserEmailSecret`. */
-  userEmailSecrets?: Maybe<UserEmailSecretsConnection>;
-  userSecret?: Maybe<UserSecret>;
-  /** Reads a single `UserSecret` using its globally unique `ID`. */
-  userSecretByNodeId?: Maybe<UserSecret>;
-  /** Reads and enables pagination through a set of `UserSecret`. */
-  userSecrets?: Maybe<UserSecretsConnection>;
 }
 
 
@@ -2163,54 +1170,6 @@ export interface QueryForumsAboutCatsArgs {
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-}
-
-
-/** The root query type which gives access points into the data universe. */
-export interface QueryJobArgs {
-  id: Scalars['Int']['input'];
-}
-
-
-/** The root query type which gives access points into the data universe. */
-export interface QueryJobByNodeIdArgs {
-  nodeId: Scalars['ID']['input'];
-}
-
-
-/** The root query type which gives access points into the data universe. */
-export interface QueryJobQueueArgs {
-  queueName: Scalars['String']['input'];
-}
-
-
-/** The root query type which gives access points into the data universe. */
-export interface QueryJobQueueByNodeIdArgs {
-  nodeId: Scalars['ID']['input'];
-}
-
-
-/** The root query type which gives access points into the data universe. */
-export interface QueryJobQueuesArgs {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<JobQueueCondition>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<JobQueuesOrderBy>>;
-}
-
-
-/** The root query type which gives access points into the data universe. */
-export interface QueryJobsArgs {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<JobCondition>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<JobsOrderBy>>;
 }
 
 
@@ -2270,30 +1229,6 @@ export interface QueryUserAuthenticationByServiceAndIdentifierArgs {
 
 
 /** The root query type which gives access points into the data universe. */
-export interface QueryUserAuthenticationSecretArgs {
-  userAuthenticationId: Scalars['Int']['input'];
-}
-
-
-/** The root query type which gives access points into the data universe. */
-export interface QueryUserAuthenticationSecretByNodeIdArgs {
-  nodeId: Scalars['ID']['input'];
-}
-
-
-/** The root query type which gives access points into the data universe. */
-export interface QueryUserAuthenticationSecretsArgs {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<UserAuthenticationSecretCondition>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<UserAuthenticationSecretsOrderBy>>;
-}
-
-
-/** The root query type which gives access points into the data universe. */
 export interface QueryUserByNodeIdArgs {
   nodeId: Scalars['ID']['input'];
 }
@@ -2321,125 +1256,6 @@ export interface QueryUserEmailByNodeIdArgs {
 export interface QueryUserEmailByUserIdAndEmailArgs {
   email: Scalars['String']['input'];
   userId: Scalars['Int']['input'];
-}
-
-
-/** The root query type which gives access points into the data universe. */
-export interface QueryUserEmailSecretArgs {
-  userEmailId: Scalars['Int']['input'];
-}
-
-
-/** The root query type which gives access points into the data universe. */
-export interface QueryUserEmailSecretByNodeIdArgs {
-  nodeId: Scalars['ID']['input'];
-}
-
-
-/** The root query type which gives access points into the data universe. */
-export interface QueryUserEmailSecretsArgs {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<UserEmailSecretCondition>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<UserEmailSecretsOrderBy>>;
-}
-
-
-/** The root query type which gives access points into the data universe. */
-export interface QueryUserSecretArgs {
-  userId: Scalars['Int']['input'];
-}
-
-
-/** The root query type which gives access points into the data universe. */
-export interface QueryUserSecretByNodeIdArgs {
-  nodeId: Scalars['ID']['input'];
-}
-
-
-/** The root query type which gives access points into the data universe. */
-export interface QueryUserSecretsArgs {
-  after?: InputMaybe<Scalars['Cursor']['input']>;
-  before?: InputMaybe<Scalars['Cursor']['input']>;
-  condition?: InputMaybe<UserSecretCondition>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
-  offset?: InputMaybe<Scalars['Int']['input']>;
-  orderBy?: InputMaybe<Array<UserSecretsOrderBy>>;
-}
-
-/** All input for the `reallyCreateUser` mutation. */
-export interface ReallyCreateUserInput {
-  avatarUrl?: InputMaybe<Scalars['String']['input']>;
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  email?: InputMaybe<Scalars['String']['input']>;
-  emailIsVerified?: InputMaybe<Scalars['Boolean']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  password?: InputMaybe<Scalars['String']['input']>;
-  username?: InputMaybe<Scalars['String']['input']>;
-}
-
-/** The output of our `reallyCreateUser` mutation. */
-export interface ReallyCreateUserPayload {
-  __typename?: 'ReallyCreateUserPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-  user?: Maybe<User>;
-  /** An edge for our `User`. May be used by Relay 1. */
-  userEdge?: Maybe<UsersEdge>;
-}
-
-
-/** The output of our `reallyCreateUser` mutation. */
-export interface ReallyCreateUserPayloadUserEdgeArgs {
-  orderBy?: InputMaybe<Array<UsersOrderBy>>;
-}
-
-/** All input for the `registerUser` mutation. */
-export interface RegisterUserInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  fAuthDetails?: InputMaybe<Scalars['JSON']['input']>;
-  fEmailIsVerified?: InputMaybe<Scalars['Boolean']['input']>;
-  fIdentifier?: InputMaybe<Scalars['String']['input']>;
-  fProfile?: InputMaybe<Scalars['JSON']['input']>;
-  fService?: InputMaybe<Scalars['String']['input']>;
-}
-
-/** The output of our `registerUser` mutation. */
-export interface RegisterUserPayload {
-  __typename?: 'RegisterUserPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-  user?: Maybe<User>;
-  /** An edge for our `User`. May be used by Relay 1. */
-  userEdge?: Maybe<UsersEdge>;
-}
-
-
-/** The output of our `registerUser` mutation. */
-export interface RegisterUserPayloadUserEdgeArgs {
-  orderBy?: InputMaybe<Array<UsersOrderBy>>;
 }
 
 /** All input for the `resetPassword` mutation. */
@@ -2473,40 +1289,6 @@ export interface ResetPasswordPayload {
 /** The output of our `resetPassword` mutation. */
 export interface ResetPasswordPayloadUserEdgeArgs {
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
-}
-
-/** All input for the `scheduleJob` mutation. */
-export interface ScheduleJobInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  identifier?: InputMaybe<Scalars['String']['input']>;
-  payload?: InputMaybe<Scalars['JSON']['input']>;
-  queueName?: InputMaybe<Scalars['String']['input']>;
-  runAt?: InputMaybe<Scalars['Datetime']['input']>;
-}
-
-/** The output of our `scheduleJob` mutation. */
-export interface ScheduleJobPayload {
-  __typename?: 'ScheduleJobPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  job?: Maybe<Job>;
-  /** An edge for our `Job`. May be used by Relay 1. */
-  jobEdge?: Maybe<JobsEdge>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-}
-
-
-/** The output of our `scheduleJob` mutation. */
-export interface ScheduleJobPayloadJobEdgeArgs {
-  orderBy?: InputMaybe<Array<JobsOrderBy>>;
 }
 
 /** An individual message thread within a Forum. */
@@ -2680,100 +1462,6 @@ export interface UpdateForumPayloadForumEdgeArgs {
   orderBy?: InputMaybe<Array<ForumsOrderBy>>;
 }
 
-/** All input for the `updateJobByNodeId` mutation. */
-export interface UpdateJobByNodeIdInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The globally unique `ID` which will identify a single `Job` to be updated. */
-  nodeId: Scalars['ID']['input'];
-  /** An object where the defined keys will be set on the `Job` being updated. */
-  patch: JobPatch;
-}
-
-/** All input for the `updateJob` mutation. */
-export interface UpdateJobInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  id: Scalars['Int']['input'];
-  /** An object where the defined keys will be set on the `Job` being updated. */
-  patch: JobPatch;
-}
-
-/** The output of our update `Job` mutation. */
-export interface UpdateJobPayload {
-  __typename?: 'UpdateJobPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** The `Job` that was updated by this mutation. */
-  job?: Maybe<Job>;
-  /** An edge for our `Job`. May be used by Relay 1. */
-  jobEdge?: Maybe<JobsEdge>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-}
-
-
-/** The output of our update `Job` mutation. */
-export interface UpdateJobPayloadJobEdgeArgs {
-  orderBy?: InputMaybe<Array<JobsOrderBy>>;
-}
-
-/** All input for the `updateJobQueueByNodeId` mutation. */
-export interface UpdateJobQueueByNodeIdInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The globally unique `ID` which will identify a single `JobQueue` to be updated. */
-  nodeId: Scalars['ID']['input'];
-  /** An object where the defined keys will be set on the `JobQueue` being updated. */
-  patch: JobQueuePatch;
-}
-
-/** All input for the `updateJobQueue` mutation. */
-export interface UpdateJobQueueInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** An object where the defined keys will be set on the `JobQueue` being updated. */
-  patch: JobQueuePatch;
-  queueName: Scalars['String']['input'];
-}
-
-/** The output of our update `JobQueue` mutation. */
-export interface UpdateJobQueuePayload {
-  __typename?: 'UpdateJobQueuePayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** The `JobQueue` that was updated by this mutation. */
-  jobQueue?: Maybe<JobQueue>;
-  /** An edge for our `JobQueue`. May be used by Relay 1. */
-  jobQueueEdge?: Maybe<JobQueuesEdge>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-}
-
-
-/** The output of our update `JobQueue` mutation. */
-export interface UpdateJobQueuePayloadJobQueueEdgeArgs {
-  orderBy?: InputMaybe<Array<JobQueuesOrderBy>>;
-}
-
 /** All input for the `updatePostByNodeId` mutation. */
 export interface UpdatePostByNodeIdInput {
   /**
@@ -2938,55 +1626,6 @@ export interface UpdateUserAuthenticationPayloadUserAuthenticationEdgeArgs {
   orderBy?: InputMaybe<Array<UserAuthenticationsOrderBy>>;
 }
 
-/** All input for the `updateUserAuthenticationSecretByNodeId` mutation. */
-export interface UpdateUserAuthenticationSecretByNodeIdInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The globally unique `ID` which will identify a single `UserAuthenticationSecret` to be updated. */
-  nodeId: Scalars['ID']['input'];
-  /** An object where the defined keys will be set on the `UserAuthenticationSecret` being updated. */
-  patch: UserAuthenticationSecretPatch;
-}
-
-/** All input for the `updateUserAuthenticationSecret` mutation. */
-export interface UpdateUserAuthenticationSecretInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** An object where the defined keys will be set on the `UserAuthenticationSecret` being updated. */
-  patch: UserAuthenticationSecretPatch;
-  userAuthenticationId: Scalars['Int']['input'];
-}
-
-/** The output of our update `UserAuthenticationSecret` mutation. */
-export interface UpdateUserAuthenticationSecretPayload {
-  __typename?: 'UpdateUserAuthenticationSecretPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-  /** Reads a single `UserAuthentication` that is related to this `UserAuthenticationSecret`. */
-  userAuthentication?: Maybe<UserAuthentication>;
-  /** The `UserAuthenticationSecret` that was updated by this mutation. */
-  userAuthenticationSecret?: Maybe<UserAuthenticationSecret>;
-  /** An edge for our `UserAuthenticationSecret`. May be used by Relay 1. */
-  userAuthenticationSecretEdge?: Maybe<UserAuthenticationSecretsEdge>;
-}
-
-
-/** The output of our update `UserAuthenticationSecret` mutation. */
-export interface UpdateUserAuthenticationSecretPayloadUserAuthenticationSecretEdgeArgs {
-  orderBy?: InputMaybe<Array<UserAuthenticationSecretsOrderBy>>;
-}
-
 /** All input for the `updateUserByNodeId` mutation. */
 export interface UpdateUserByNodeIdInput {
   /**
@@ -3076,55 +1715,6 @@ export interface UpdateUserEmailPayloadUserEmailEdgeArgs {
   orderBy?: InputMaybe<Array<UserEmailsOrderBy>>;
 }
 
-/** All input for the `updateUserEmailSecretByNodeId` mutation. */
-export interface UpdateUserEmailSecretByNodeIdInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The globally unique `ID` which will identify a single `UserEmailSecret` to be updated. */
-  nodeId: Scalars['ID']['input'];
-  /** An object where the defined keys will be set on the `UserEmailSecret` being updated. */
-  patch: UserEmailSecretPatch;
-}
-
-/** All input for the `updateUserEmailSecret` mutation. */
-export interface UpdateUserEmailSecretInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** An object where the defined keys will be set on the `UserEmailSecret` being updated. */
-  patch: UserEmailSecretPatch;
-  userEmailId: Scalars['Int']['input'];
-}
-
-/** The output of our update `UserEmailSecret` mutation. */
-export interface UpdateUserEmailSecretPayload {
-  __typename?: 'UpdateUserEmailSecretPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-  /** Reads a single `UserEmail` that is related to this `UserEmailSecret`. */
-  userEmail?: Maybe<UserEmail>;
-  /** The `UserEmailSecret` that was updated by this mutation. */
-  userEmailSecret?: Maybe<UserEmailSecret>;
-  /** An edge for our `UserEmailSecret`. May be used by Relay 1. */
-  userEmailSecretEdge?: Maybe<UserEmailSecretsEdge>;
-}
-
-
-/** The output of our update `UserEmailSecret` mutation. */
-export interface UpdateUserEmailSecretPayloadUserEmailSecretEdgeArgs {
-  orderBy?: InputMaybe<Array<UserEmailSecretsOrderBy>>;
-}
-
 /** All input for the `updateUser` mutation. */
 export interface UpdateUserInput {
   /**
@@ -3160,55 +1750,6 @@ export interface UpdateUserPayloadUserEdgeArgs {
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
 }
 
-/** All input for the `updateUserSecretByNodeId` mutation. */
-export interface UpdateUserSecretByNodeIdInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** The globally unique `ID` which will identify a single `UserSecret` to be updated. */
-  nodeId: Scalars['ID']['input'];
-  /** An object where the defined keys will be set on the `UserSecret` being updated. */
-  patch: UserSecretPatch;
-}
-
-/** All input for the `updateUserSecret` mutation. */
-export interface UpdateUserSecretInput {
-  /**
-   * An arbitrary string value with no semantic meaning. Will be included in the
-   * payload verbatim. May be used to track mutations by the client.
-   */
-  clientMutationId?: InputMaybe<Scalars['String']['input']>;
-  /** An object where the defined keys will be set on the `UserSecret` being updated. */
-  patch: UserSecretPatch;
-  userId: Scalars['Int']['input'];
-}
-
-/** The output of our update `UserSecret` mutation. */
-export interface UpdateUserSecretPayload {
-  __typename?: 'UpdateUserSecretPayload';
-  /**
-   * The exact same `clientMutationId` that was provided in the mutation input,
-   * unchanged and unused. May be used by a client to track mutations.
-   */
-  clientMutationId?: Maybe<Scalars['String']['output']>;
-  /** Our root query field type. Allows us to run any query from our mutation payload. */
-  query?: Maybe<Query>;
-  /** Reads a single `User` that is related to this `UserSecret`. */
-  user?: Maybe<User>;
-  /** The `UserSecret` that was updated by this mutation. */
-  userSecret?: Maybe<UserSecret>;
-  /** An edge for our `UserSecret`. May be used by Relay 1. */
-  userSecretEdge?: Maybe<UserSecretsEdge>;
-}
-
-
-/** The output of our update `UserSecret` mutation. */
-export interface UpdateUserSecretPayloadUserSecretEdgeArgs {
-  orderBy?: InputMaybe<Array<UserSecretsOrderBy>>;
-}
-
 /** A user who can log in to the application. */
 export interface User extends Node {
   __typename?: 'User';
@@ -3230,8 +1771,6 @@ export interface User extends Node {
   updatedAt: Scalars['Datetime']['output'];
   /** Reads and enables pagination through a set of `UserEmail`. */
   userEmails: UserEmailsConnection;
-  /** Reads a single `UserSecret` that is related to this `User`. */
-  userSecret?: Maybe<UserSecret>;
   /** Public-facing username (or 'handle') of the user. */
   username: Scalars['String']['output'];
 }
@@ -3284,8 +1823,6 @@ export interface UserAuthentication extends Node {
   /** The login service used, e.g. `twitter` or `github`. */
   service: Scalars['String']['output'];
   updatedAt: Scalars['Datetime']['output'];
-  /** Reads a single `UserAuthenticationSecret` that is related to this `UserAuthentication`. */
-  userAuthenticationSecret?: Maybe<UserAuthenticationSecret>;
 }
 
 /** An input for mutations affecting `UserAuthentication` */
@@ -3309,67 +1846,6 @@ export interface UserAuthenticationPatch {
   service?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
 }
-
-export interface UserAuthenticationSecret extends Node {
-  __typename?: 'UserAuthenticationSecret';
-  details: Scalars['JSON']['output'];
-  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
-  nodeId: Scalars['ID']['output'];
-  /** Reads a single `UserAuthentication` that is related to this `UserAuthenticationSecret`. */
-  userAuthentication?: Maybe<UserAuthentication>;
-  userAuthenticationId: Scalars['Int']['output'];
-}
-
-/**
- * A condition to be used against `UserAuthenticationSecret` object types. All
- * fields are tested for equality and combined with a logical ‘and.’
- */
-export interface UserAuthenticationSecretCondition {
-  /** Checks for equality with the object’s `userAuthenticationId` field. */
-  userAuthenticationId?: InputMaybe<Scalars['Int']['input']>;
-}
-
-/** An input for mutations affecting `UserAuthenticationSecret` */
-export interface UserAuthenticationSecretInput {
-  details?: InputMaybe<Scalars['JSON']['input']>;
-  userAuthenticationId: Scalars['Int']['input'];
-}
-
-/** Represents an update to a `UserAuthenticationSecret`. Fields that are set will be updated. */
-export interface UserAuthenticationSecretPatch {
-  details?: InputMaybe<Scalars['JSON']['input']>;
-  userAuthenticationId?: InputMaybe<Scalars['Int']['input']>;
-}
-
-/** A connection to a list of `UserAuthenticationSecret` values. */
-export interface UserAuthenticationSecretsConnection {
-  __typename?: 'UserAuthenticationSecretsConnection';
-  /** A list of edges which contains the `UserAuthenticationSecret` and cursor to aid in pagination. */
-  edges: Array<UserAuthenticationSecretsEdge>;
-  /** A list of `UserAuthenticationSecret` objects. */
-  nodes: Array<UserAuthenticationSecret>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** The count of *all* `UserAuthenticationSecret` you could get from the connection. */
-  totalCount: Scalars['Int']['output'];
-}
-
-/** A `UserAuthenticationSecret` edge in the connection. */
-export interface UserAuthenticationSecretsEdge {
-  __typename?: 'UserAuthenticationSecretsEdge';
-  /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  /** The `UserAuthenticationSecret` at the end of the edge. */
-  node: UserAuthenticationSecret;
-}
-
-/** Methods to use when ordering `UserAuthenticationSecret`. */
-export type UserAuthenticationSecretsOrderBy =
-  | 'NATURAL'
-  | 'PRIMARY_KEY_ASC'
-  | 'PRIMARY_KEY_DESC'
-  | 'USER_AUTHENTICATION_ID_ASC'
-  | 'USER_AUTHENTICATION_ID_DESC';
 
 /** A `UserAuthentication` edge in the connection. */
 export interface UserAuthenticationsEdge {
@@ -3404,8 +1880,6 @@ export interface UserEmail extends Node {
   updatedAt: Scalars['Datetime']['output'];
   /** Reads a single `User` that is related to this `UserEmail`. */
   user?: Maybe<User>;
-  /** Reads a single `UserEmailSecret` that is related to this `UserEmail`. */
-  userEmailSecret?: Maybe<UserEmailSecret>;
   userId: Scalars['Int']['output'];
 }
 
@@ -3443,74 +1917,6 @@ export interface UserEmailPatch {
   updatedAt?: InputMaybe<Scalars['Datetime']['input']>;
   userId?: InputMaybe<Scalars['Int']['input']>;
 }
-
-/** The contents of this table should never be visible to the user. Contains data mostly related to email verification and avoiding spamming users. */
-export interface UserEmailSecret extends Node {
-  __typename?: 'UserEmailSecret';
-  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
-  nodeId: Scalars['ID']['output'];
-  /** We store the time the last password reset was sent to this email to prevent the email getting flooded. */
-  passwordResetEmailSentAt?: Maybe<Scalars['Datetime']['output']>;
-  /** Reads a single `UserEmail` that is related to this `UserEmailSecret`. */
-  userEmail?: Maybe<UserEmail>;
-  userEmailId: Scalars['Int']['output'];
-  verificationToken?: Maybe<Scalars['String']['output']>;
-}
-
-/**
- * A condition to be used against `UserEmailSecret` object types. All fields are
- * tested for equality and combined with a logical ‘and.’
- */
-export interface UserEmailSecretCondition {
-  /** Checks for equality with the object’s `userEmailId` field. */
-  userEmailId?: InputMaybe<Scalars['Int']['input']>;
-}
-
-/** An input for mutations affecting `UserEmailSecret` */
-export interface UserEmailSecretInput {
-  /** We store the time the last password reset was sent to this email to prevent the email getting flooded. */
-  passwordResetEmailSentAt?: InputMaybe<Scalars['Datetime']['input']>;
-  userEmailId: Scalars['Int']['input'];
-  verificationToken?: InputMaybe<Scalars['String']['input']>;
-}
-
-/** Represents an update to a `UserEmailSecret`. Fields that are set will be updated. */
-export interface UserEmailSecretPatch {
-  /** We store the time the last password reset was sent to this email to prevent the email getting flooded. */
-  passwordResetEmailSentAt?: InputMaybe<Scalars['Datetime']['input']>;
-  userEmailId?: InputMaybe<Scalars['Int']['input']>;
-  verificationToken?: InputMaybe<Scalars['String']['input']>;
-}
-
-/** A connection to a list of `UserEmailSecret` values. */
-export interface UserEmailSecretsConnection {
-  __typename?: 'UserEmailSecretsConnection';
-  /** A list of edges which contains the `UserEmailSecret` and cursor to aid in pagination. */
-  edges: Array<UserEmailSecretsEdge>;
-  /** A list of `UserEmailSecret` objects. */
-  nodes: Array<UserEmailSecret>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** The count of *all* `UserEmailSecret` you could get from the connection. */
-  totalCount: Scalars['Int']['output'];
-}
-
-/** A `UserEmailSecret` edge in the connection. */
-export interface UserEmailSecretsEdge {
-  __typename?: 'UserEmailSecretsEdge';
-  /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  /** The `UserEmailSecret` at the end of the edge. */
-  node: UserEmailSecret;
-}
-
-/** Methods to use when ordering `UserEmailSecret`. */
-export type UserEmailSecretsOrderBy =
-  | 'NATURAL'
-  | 'PRIMARY_KEY_ASC'
-  | 'PRIMARY_KEY_DESC'
-  | 'USER_EMAIL_ID_ASC'
-  | 'USER_EMAIL_ID_DESC';
 
 /** A connection to a list of `UserEmail` values. */
 export interface UserEmailsConnection {
@@ -3575,86 +1981,6 @@ export interface UserPatch {
   /** Public-facing username (or 'handle') of the user. */
   username?: InputMaybe<Scalars['String']['input']>;
 }
-
-/** The contents of this table should never be visible to the user. Contains data mostly related to authentication. */
-export interface UserSecret extends Node {
-  __typename?: 'UserSecret';
-  firstFailedPasswordAttempt?: Maybe<Scalars['Datetime']['output']>;
-  firstFailedResetPasswordAttempt?: Maybe<Scalars['Datetime']['output']>;
-  /** A globally unique identifier. Can be used in various places throughout the system to identify this single value. */
-  nodeId: Scalars['ID']['output'];
-  passwordAttempts: Scalars['Int']['output'];
-  passwordHash?: Maybe<Scalars['String']['output']>;
-  resetPasswordAttempts: Scalars['Int']['output'];
-  resetPasswordToken?: Maybe<Scalars['String']['output']>;
-  resetPasswordTokenGenerated?: Maybe<Scalars['Datetime']['output']>;
-  /** Reads a single `User` that is related to this `UserSecret`. */
-  user?: Maybe<User>;
-  userId: Scalars['Int']['output'];
-}
-
-/**
- * A condition to be used against `UserSecret` object types. All fields are tested
- * for equality and combined with a logical ‘and.’
- */
-export interface UserSecretCondition {
-  /** Checks for equality with the object’s `userId` field. */
-  userId?: InputMaybe<Scalars['Int']['input']>;
-}
-
-/** An input for mutations affecting `UserSecret` */
-export interface UserSecretInput {
-  firstFailedPasswordAttempt?: InputMaybe<Scalars['Datetime']['input']>;
-  firstFailedResetPasswordAttempt?: InputMaybe<Scalars['Datetime']['input']>;
-  passwordAttempts?: InputMaybe<Scalars['Int']['input']>;
-  passwordHash?: InputMaybe<Scalars['String']['input']>;
-  resetPasswordAttempts?: InputMaybe<Scalars['Int']['input']>;
-  resetPasswordToken?: InputMaybe<Scalars['String']['input']>;
-  resetPasswordTokenGenerated?: InputMaybe<Scalars['Datetime']['input']>;
-  userId: Scalars['Int']['input'];
-}
-
-/** Represents an update to a `UserSecret`. Fields that are set will be updated. */
-export interface UserSecretPatch {
-  firstFailedPasswordAttempt?: InputMaybe<Scalars['Datetime']['input']>;
-  firstFailedResetPasswordAttempt?: InputMaybe<Scalars['Datetime']['input']>;
-  passwordAttempts?: InputMaybe<Scalars['Int']['input']>;
-  passwordHash?: InputMaybe<Scalars['String']['input']>;
-  resetPasswordAttempts?: InputMaybe<Scalars['Int']['input']>;
-  resetPasswordToken?: InputMaybe<Scalars['String']['input']>;
-  resetPasswordTokenGenerated?: InputMaybe<Scalars['Datetime']['input']>;
-  userId?: InputMaybe<Scalars['Int']['input']>;
-}
-
-/** A connection to a list of `UserSecret` values. */
-export interface UserSecretsConnection {
-  __typename?: 'UserSecretsConnection';
-  /** A list of edges which contains the `UserSecret` and cursor to aid in pagination. */
-  edges: Array<UserSecretsEdge>;
-  /** A list of `UserSecret` objects. */
-  nodes: Array<UserSecret>;
-  /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** The count of *all* `UserSecret` you could get from the connection. */
-  totalCount: Scalars['Int']['output'];
-}
-
-/** A `UserSecret` edge in the connection. */
-export interface UserSecretsEdge {
-  __typename?: 'UserSecretsEdge';
-  /** A cursor for use in pagination. */
-  cursor?: Maybe<Scalars['Cursor']['output']>;
-  /** The `UserSecret` at the end of the edge. */
-  node: UserSecret;
-}
-
-/** Methods to use when ordering `UserSecret`. */
-export type UserSecretsOrderBy =
-  | 'NATURAL'
-  | 'PRIMARY_KEY_ASC'
-  | 'PRIMARY_KEY_DESC'
-  | 'USER_ID_ASC'
-  | 'USER_ID_DESC';
 
 /** A `User` edge in the connection. */
 export interface UsersEdge {
