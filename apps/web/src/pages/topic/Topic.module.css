@@ -1,0 +1,221 @@
+/**
+ * Topic Page Styles
+ */
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.breadcrumb a {
+    color: #667eea;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.separator {
+    color: #999;
+}
+
+.breadcrumb span:last-child {
+    color: #666;
+}
+
+.topicHeader {
+    margin-bottom: 1.5rem;
+}
+
+.topicHeader h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 0.5rem;
+}
+
+.topicMeta {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.error {
+    text-align: center;
+    padding: 3rem;
+}
+
+.error h2 {
+    color: #444;
+    margin: 0 0 0.5rem;
+}
+
+.error p {
+    color: #666;
+    margin: 0 0 1rem;
+}
+
+.backLink {
+    color: #667eea;
+    text-decoration: none;
+}
+
+.backLink:hover {
+    text-decoration: underline;
+}
+
+/* Posts */
+.originalPost,
+.reply {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.originalPost {
+    border-left: 4px solid #667eea;
+}
+
+.postAuthor {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.authorName {
+    font-weight: 600;
+    color: #333;
+}
+
+.postDate {
+    font-size: 0.8rem;
+    color: #999;
+}
+
+.postBody {
+    color: #444;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+/* Replies Section */
+.repliesSection {
+    margin-top: 2rem;
+}
+
+.repliesSection h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 1rem;
+}
+
+/* Reply Form */
+.replyForm {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+.replyForm h3 {
+    margin: 0 0 1rem;
+    font-size: 1.125rem;
+    color: #333;
+}
+
+.formError {
+    background: #fee;
+    color: #c00;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+}
+
+.replyForm textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 100px;
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.replyForm textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.submitBtn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.submitBtn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.submitBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Login Prompt */
+.loginPrompt {
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+    color: #666;
+    margin-top: 2rem;
+}
+
+.loginPrompt a {
+    color: #667eea;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.loginPrompt a:hover {
+    text-decoration: underline;
+}

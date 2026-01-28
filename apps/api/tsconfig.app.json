@@ -20,13 +20,25 @@
     ],
     "references": [
         {
+            "path": "../../libs/user-api/tsconfig.lib.json"
+        },
+        {
             "path": "../../libs/gql/tsconfig.lib.json"
+        },
+        {
+            "path": "../../libs/forum-api/tsconfig.lib.json"
         },
         {
             "path": "../../libs/utils/tsconfig.lib.json"
         },
         {
+            "path": "../../libs/subscriptions/tsconfig.lib.json"
+        },
+        {
             "path": "../../libs/database/tsconfig.lib.json"
+        },
+        {
+            "path": "../../libs/jobs/tsconfig.lib.json"
         }
     ]
 }

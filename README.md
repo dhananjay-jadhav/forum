@@ -31,21 +31,116 @@ Forum Management System is ideal for communities, organizations, and projects se
 - 🤖 **GraphQL Codegen** - Automatic type generation for your schema and resolvers.
 - 🛡️ **Rate Limiting** - Express rate limiting for API abuse prevention.
 - 🔐 **GraphQL Query Security** - Limits on query depth and computational cost.
+- 📧 **Email Service** - Transactional emails for verification, welcome messages, and password resets.
+- 🔔 **Notifications** - Multi-channel notification system (email, in-app, push-ready).
+- 🛡️ **Content Moderation** - Automatic spam detection and content filtering.
+- ⏰ **Background Jobs** - Graphile Worker integration for async task processing.
+- 🧹 **Scheduled Cleanup** - Automated maintenance tasks (expired tokens, old jobs, orphaned data).
+- 📡 **Real-time Subscriptions** - GraphQL subscriptions for live updates.
+- 📊 **Analytics API** - Kafka-powered metrics and dashboard for forum activity.
+- 🔍 **Search API** - Elasticsearch-powered full-text search across topics and posts.
+- 📨 **Event Streaming** - Kafka integration for event-driven architecture.
 
 ## Project Structure
 
 ```
 ├── apps/
-│   ├── api/                 # Express + PostGraphile server
+│   ├── api/                 # Express + PostGraphile server (port 3000)
 │   │   └── src/
 │   │       ├── main.ts      # Application entry point
 │   │       └── routes/      # Express routes (health, api)
-│   └── api-e2e/             # End-to-end tests
+│   ├── analytics-api/       # Analytics service - Kafka consumer + REST API (port 3002)
+│   ├── search-api/          # Search service - Elasticsearch + Kafka consumer (port 3003)
+│   ├── api-e2e/             # End-to-end tests for main API
+│   ├── analytics-api-e2e/   # End-to-end tests for Analytics API
+│   └── search-api-e2e/      # End-to-end tests for Search API
 ├── libs/
 │   ├── database/            # Database pool and configuration
 │   ├── gql/                 # PostGraphile preset and plugins
-│   └── utils/               # Shared utilities (logger, config, health checks)
+│   ├── utils/               # Shared utilities (logger, config, health checks)
+│   ├── kafka/               # Kafka producer/consumer and event types
+│   ├── email/               # Email service (verification, welcome, password reset)
+│   ├── notifications/       # Multi-channel notification service (email, in-app, push)
+│   ├── moderation/          # Content moderation (spam detection, filtering)
+│   ├── cleanup/             # Scheduled cleanup tasks (expired tokens, old jobs)
+│   ├── jobs/                # Graphile Worker job handlers
+│   ├── subscriptions/       # GraphQL subscriptions support
+│   ├── forum-api/           # Forum-specific API extensions
+│   └── user-api/            # User management API extensions
 ```
+
+## Architecture
+
+The Forum Management System uses an event-driven microservices architecture:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                              CLIENTS                                            │
+│                    (Web App, Mobile App, API Consumers)                         │
+└─────────────────────────────────────────────────────────────────────────────────┘
+                                      │
+                                      ▼
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                           FORUM API (Port 3000)                                 │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────────┐ │
+│  │  GraphQL    │  │   REST      │  │   Health    │  │    GraphQL              │ │
+│  │  Endpoint   │  │   Routes    │  │   Checks    │  │    Subscriptions        │ │
+│  └─────────────┘  └─────────────┘  └─────────────┘  └─────────────────────────┘ │
+│  ┌─────────────────────────────────────────────────────────────────────────────┐│
+│  │                      PostGraphile (GraphQL Layer)                           ││
+│  │  ┌───────────┐  ┌───────────┐  ┌───────────┐  ┌───────────┐  ┌───────────┐ ││
+│  │  │ Forum API │  │ User API  │  │  Jobs     │  │ Moderation│  │  Email    │ ││
+│  │  │  Plugin   │  │  Plugin   │  │  Handler  │  │  Service  │  │  Service  │ ││
+│  │  └───────────┘  └───────────┘  └───────────┘  └───────────┘  └───────────┘ ││
+│  └─────────────────────────────────────────────────────────────────────────────┘│
+└──────────────────────────────────┬──────────────────────────────────────────────┘
+                                   │
+            ┌──────────────────────┼──────────────────────┐
+            │                      │                      │
+            ▼                      ▼                      ▼
+┌─────────────────────┐  ┌─────────────────────┐  ┌─────────────────────┐
+│    PostgreSQL       │  │       Kafka         │  │   Graphile Worker   │
+│    (Primary DB)     │  │   (Event Stream)    │  │   (Background Jobs) │
+│                     │  │                     │  │                     │
+│  ┌───────────────┐  │  │  Topics:            │  │  Tasks:             │
+│  │ app_public    │  │  │  • user.events      │  │  • send_email       │
+│  │ ─────────────  │  │  │  • topic.events    │  │  • moderate_post    │
+│  │ • users       │  │  │  • post.events     │  │  • cleanup          │
+│  │ • forums      │  │  │  • content.events  │  │  • notifications    │
+│  │ • topics      │  │  │  • search.events   │  │                     │
+│  │ • posts       │  │  │  • moderation      │  │                     │
+│  └───────────────┘  │  └─────────────────────┘  └─────────────────────┘
+└─────────────────────┘            │
+                                   │
+            ┌──────────────────────┴──────────────────────┐
+            │                                             │
+            ▼                                             ▼
+┌─────────────────────────────────┐     ┌─────────────────────────────────┐
+│     ANALYTICS API (Port 3002)   │     │      SEARCH API (Port 3003)     │
+│                                 │     │                                 │
+│  ┌─────────────────────────┐    │     │  ┌─────────────────────────┐    │
+│  │    Kafka Consumer       │    │     │  │    Kafka Consumer       │    │
+│  │    (All Events)         │    │     │  │    (Content Events)     │    │
+│  └─────────────────────────┘    │     │  └─────────────────────────┘    │
+│  ┌─────────────────────────┐    │     │  ┌─────────────────────────┐    │
+│  │    Metrics Store        │    │     │  │    Elasticsearch        │    │
+│  │    (Counters/TimeSeries)│    │     │  │    (Full-text Index)    │    │
+│  └─────────────────────────┘    │     │  └─────────────────────────┘    │
+│  ┌─────────────────────────┐    │     │  ┌─────────────────────────┐    │
+│  │    REST API             │    │     │  │    REST API             │    │
+│  │    /api/analytics/*     │    │     │  │    /api/search/*        │    │
+│  └─────────────────────────┘    │     │  └─────────────────────────┘    │
+└─────────────────────────────────┘     └─────────────────────────────────┘
+```
+
+### Data Flow
+
+1. **Client Request** → Forum API receives GraphQL queries/mutations
+2. **Database** → PostGraphile translates to SQL, executes against PostgreSQL
+3. **Event Publishing** → Mutations trigger Kafka events via plugin
+4. **Analytics** → Analytics API consumes events, updates metrics
+5. **Search Indexing** → Search API consumes content events, indexes in Elasticsearch
+6. **Background Jobs** → Graphile Worker processes async tasks (emails, moderation)
 
 ## Database Schema Overview
 
@@ -224,59 +319,6 @@ yarn api:e2e
 | `/health`   | Comprehensive health check      |
 | `/ready`    | Kubernetes readiness probe      |
 
-## Performance
-
-### Benchmark Results
-
-> **Test Environment**: MacBook Air M1, Node.js v20, PostgreSQL 15  
-> **Test Parameters**: 10 concurrent connections, 10 seconds duration
-
-#### REST API Performance
-
-| Endpoint  | Req/sec | Avg Latency | P99 Latency | Throughput |
-| --------- | ------- | ----------- | ----------- | ---------- |
-| `/live`   | 42,182  | 0.01 ms     | < 1 ms.     | 26 MB/s    |
-| `/ready`  | 16,529  | 0.02 ms     | 1 ms        | 10 MB/s    |
-| `/health` | 15,238  | 0.03 ms     | 1 ms        | 12 MB/s    |
-| `/api`    | 11,350  | 0.18 ms     | 2 ms        | 20 MB/s    |
-
-#### GraphQL Performance
-
-| Query         | Req/sec | Avg Latency | P99 Latency | Throughput |
-| ------------- | ------- | ----------- | ----------- | ---------- |
-| Simple Query  | 28,138  | 0.03 ms     | 1 ms        | 21 MB/s    |
-| Introspection | 22,205  | 0.04 ms     | 2 ms        | 24 MB/s    |
-
-#### Key Metrics
-
-- ⚡ **Peak Throughput**: 42,182 req/s (liveness endpoint)
-- 🚀 **GraphQL Throughput**: 28,138 req/s (simple queries)
-- 📊 **P99 Latency**: < 2ms for all endpoints
-- ✅ **Error Rate**: 0%
-
-### Running Performance Tests
-
-```bash
-# Start the API server
-yarn start
-
-# Run all performance tests
-yarn perf:test
-
-# Run specific test(s)
-yarn perf:run health
-yarn perf:run health,live,graphql_typename
-
-# Run by category
-yarn perf:rest
-yarn perf:graphql
-
-# Stress test (100 connections, 60 seconds)
-yarn perf:stress
-```
-
-See [performance/README.md](performance/README.md) for detailed documentation.
-
 ## Environment Variables
 
 | Variable              | Description                          | Default                                                |
@@ -297,6 +339,33 @@ See [performance/README.md](performance/README.md) for detailed documentation.
 | `GRAPHQL_COST_LIMIT`  | Maximum GraphQL query cost           | `1000`                                                 |
 | `SHUTDOWN_TIMEOUT`    | Graceful shutdown timeout (ms)       | `10000`                                                |
 | `KEEP_ALIVE_TIMEOUT`  | HTTP keep-alive timeout (ms)         | `65000`                                                |
+
+### Email Configuration
+
+| Variable              | Description                          | Default                                                |
+| --------------------- | ------------------------------------ | ------------------------------------------------------ |
+| `SMTP_HOST`           | SMTP server hostname                 | - (mock in dev)                                        |
+| `SMTP_PORT`           | SMTP server port                     | `587`                                                  |
+| `SMTP_USER`           | SMTP username                        | -                                                      |
+| `SMTP_PASS`           | SMTP password                        | -                                                      |
+| `SMTP_FROM`           | Default sender email address         | `noreply@example.com`                                  |
+| `APP_URL`             | Application URL for email links      | `http://localhost:3000`                                |
+
+### Moderation Configuration
+
+| Variable                    | Description                          | Default                                          |
+| --------------------------- | ------------------------------------ | ------------------------------------------------ |
+| `MODERATION_ENABLED`        | Enable automatic content moderation  | `true`                                           |
+| `MODERATION_SPAM_THRESHOLD` | Spam score threshold (0-100)         | `70`                                             |
+
+### Cleanup Configuration
+
+| Variable                        | Description                              | Default   |
+| ------------------------------- | ---------------------------------------- | --------- |
+| `CLEANUP_UNVERIFIED_EMAIL_HOURS`| Hours before unverified emails deleted   | `48`      |
+| `CLEANUP_RESET_TOKEN_HOURS`     | Hours before reset tokens expire         | `24`      |
+| `CLEANUP_COMPLETED_JOB_DAYS`    | Days before completed jobs deleted       | `7`       |
+| `CLEANUP_FAILED_JOB_DAYS`       | Days before failed jobs deleted          | `30`      |
 
 ## Libraries
 
@@ -346,6 +415,103 @@ import { preset } from '@app/gql';
 import { postgraphile } from 'postgraphile';
 
 const pgl = postgraphile(preset);
+```
+
+### @app/email
+
+Email service for transactional emails (verification, welcome, password reset).
+
+```typescript
+import { sendVerificationEmail, sendWelcomeEmail, sendPasswordResetEmail } from '@app/email';
+
+// Send email verification
+await sendVerificationEmail('user@example.com', 'verification-token');
+
+// Send welcome email
+await sendWelcomeEmail('user@example.com', 'username', 'Display Name');
+
+// Send password reset
+await sendPasswordResetEmail('user@example.com', userId, 'reset-token');
+```
+
+### @app/notifications
+
+Multi-channel notification service supporting email, in-app, and push notifications.
+
+```typescript
+import { notifyTopicReply, notifyWelcome, NotificationChannel } from '@app/notifications';
+
+// Notify topic author of a reply
+await notifyTopicReply(topicAuthorId, topicId, postId, replyAuthorId);
+
+// Send welcome notification
+await notifyWelcome(userId);
+```
+
+### @app/moderation
+
+Content moderation with spam detection and content filtering.
+
+```typescript
+import { moderatePost, moderateTopic, checkSpam, filterContent } from '@app/moderation';
+
+// Moderate a post (checks spam, filters content, applies actions)
+const result = await moderatePost(postId);
+
+// Moderate a topic
+const result = await moderateTopic(topicId);
+
+// Check content for spam
+const spamResult = checkSpam(content);
+
+// Filter inappropriate content
+const filtered = filterContent(content);
+```
+
+### @app/cleanup
+
+Scheduled cleanup tasks for database maintenance.
+
+```typescript
+import { runAllCleanupTasks, runCleanupTask } from '@app/cleanup';
+
+// Run all cleanup tasks
+const summary = await runAllCleanupTasks();
+
+// Run specific cleanup task
+const result = await runCleanupTask('expired_tokens');
+// Available tasks: 'unverified_emails', 'expired_tokens', 'old_jobs', 'orphaned_data'
+```
+
+### @app/jobs
+
+Graphile Worker job handlers integrating all domain services.
+
+```typescript
+import { forumTaskList, forumCrontab } from '@app/jobs';
+
+// Task handlers for:
+// - user_emails__send_verification
+// - user__forgot_password  
+// - user__send_welcome
+// - post__notify_topic_author
+// - post__moderate
+// - topic__moderate
+// - cleanup__run_all (scheduled daily at 3 AM)
+// - cleanup__run
+```
+
+### @app/subscriptions
+
+GraphQL subscriptions support for real-time updates.
+
+```typescript
+import { subscriptionPlugin } from '@app/subscriptions';
+
+// Enables real-time subscriptions for:
+// - New posts in topics
+// - Topic updates
+// - User notifications
 ```
 
 ## Scripts
@@ -418,8 +584,54 @@ readinessProbe:
     periodSeconds: 5
 ```
 
+## Event-Driven Architecture
+
+The Forum system uses Apache Kafka for event streaming, enabling real-time analytics and search indexing.
+
+### Kafka Topics
+
+| Topic | Description |
+|-------|-------------|
+| `forum.user.events` | User registration, login, profile updates |
+| `forum.topic.events` | Topic creation, updates, deletion, views |
+| `forum.post.events` | Post creation, updates, deletion |
+| `forum.search.events` | Search queries and results |
+| `forum.content.events` | Aggregated content events for indexing |
+| `forum.moderation.events` | Content moderation actions |
+
+### Analytics API
+
+The Analytics API (`localhost:3002`) consumes Kafka events and provides real-time metrics:
+
+```bash
+# Get dashboard summary
+curl http://localhost:3002/api/analytics/dashboard
+
+# Get all counters
+curl http://localhost:3002/api/analytics/counters
+
+# Get time series data
+curl http://localhost:3002/api/analytics/timeseries/topics_created?limit=24
+```
+
+### Search API
+
+The Search API (`localhost:3003`) indexes content in Elasticsearch for full-text search:
+
+```bash
+# Search all content
+curl "http://localhost:3003/api/search?q=discussion"
+
+# Search topics only
+curl "http://localhost:3003/api/search/topics?q=help"
+
+# Search posts by author
+curl "http://localhost:3003/api/search/posts?q=example&authorId=1"
+
+# Get suggestions
+curl "http://localhost:3003/api/search/suggestions?q=hel"
+```
+
 ## License
 
 MIT
-
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)

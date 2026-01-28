@@ -15,6 +15,36 @@
             "skipFiles": ["<node_internals>/**"],
             "sourceMaps": true,
             "outFiles": ["${workspaceFolder}/apps/api/dist/**/*.(m|c|)js", "!**/node_modules/**"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug @app/analytics-api with Nx",
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": ["nx", "serve", "@app/analytics-api"],
+            "env": {
+                "NODE_OPTIONS": "--inspect=9230"
+            },
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "skipFiles": ["<node_internals>/**"],
+            "sourceMaps": true,
+            "outFiles": ["${workspaceFolder}/apps/analytics-api/dist/**/*.(m|c|)js", "!**/node_modules/**"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug @app/search-api with Nx",
+            "runtimeExecutable": "yarn",
+            "runtimeArgs": ["nx", "serve", "@app/search-api"],
+            "env": {
+                "NODE_OPTIONS": "--inspect=9231"
+            },
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "skipFiles": ["<node_internals>/**"],
+            "sourceMaps": true,
+            "outFiles": ["${workspaceFolder}/apps/search-api/dist/**/*.(m|c|)js", "!**/node_modules/**"]
         }
     ]
 }

@@ -670,6 +670,42 @@ export type ForumsOrderBy =
   | 'SLUG_ASC'
   | 'SLUG_DESC';
 
+/** JWT token response containing access and refresh tokens. */
+export interface JwtTokenPayload {
+  __typename?: 'JwtTokenPayload';
+  /** JWT access token for API authentication */
+  accessToken: Scalars['String']['output'];
+  /** Access token expiration time in seconds */
+  expiresIn: Scalars['Int']['output'];
+  /** JWT refresh token for getting new access tokens */
+  refreshToken: Scalars['String']['output'];
+  /** The authenticated user */
+  user: User;
+}
+
+export interface ListenPayload {
+  __typename?: 'ListenPayload';
+  /** Our root query field type. Allows us to run any query from our subscription payload. */
+  query?: Maybe<Query>;
+  relatedNode?: Maybe<Node>;
+  relatedNodeId?: Maybe<Scalars['ID']['output']>;
+}
+
+/** Input for the login mutation. */
+export interface LoginInput {
+  /** Password */
+  password: Scalars['String']['input'];
+  /** Username or email address */
+  usernameOrEmail: Scalars['String']['input'];
+}
+
+/** Payload for logout mutation. */
+export interface LogoutPayload {
+  __typename?: 'LogoutPayload';
+  /** Whether the logout was successful */
+  success: Scalars['Boolean']['output'];
+}
+
 /** The root mutation type which contains root level fields which mutate data. */
 export interface Mutation {
   __typename?: 'Mutation';
@@ -719,6 +755,23 @@ export interface Mutation {
   deleteUserEmailByUserIdAndEmail?: Maybe<DeleteUserEmailPayload>;
   /** If you've forgotten your password, give us one of your email addresses and we' send you a reset token. Note this only works if you have added an email address! */
   forgotPassword?: Maybe<ForgotPasswordPayload>;
+  /**
+   * Authenticate a user with username/email and password.
+   * Returns JWT tokens on success.
+   */
+  login?: Maybe<JwtTokenPayload>;
+  /**
+   * Logout the current user.
+   * Clients should discard their tokens after calling this.
+   */
+  logout?: Maybe<LogoutPayload>;
+  /** Get a new access token using a valid refresh token. */
+  refreshToken?: Maybe<JwtTokenPayload>;
+  /**
+   * Register a new user account.
+   * Returns JWT tokens on success.
+   */
+  register?: Maybe<JwtTokenPayload>;
   /** After triggering forgotPassword, you'll be sent a reset token. Combine this with your user ID and a new password to reset your password. */
   resetPassword?: Maybe<ResetPasswordPayload>;
   /** Updates a single `Forum` using a unique key and a patch. */
@@ -891,6 +944,24 @@ export interface MutationDeleteUserEmailByUserIdAndEmailArgs {
 /** The root mutation type which contains root level fields which mutate data. */
 export interface MutationForgotPasswordArgs {
   input: ForgotPasswordInput;
+}
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export interface MutationLoginArgs {
+  input: LoginInput;
+}
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export interface MutationRefreshTokenArgs {
+  input: RefreshTokenInput;
+}
+
+
+/** The root mutation type which contains root level fields which mutate data. */
+export interface MutationRegisterArgs {
+  input: RegisterInput;
 }
 
 
@@ -1258,6 +1329,24 @@ export interface QueryUserEmailByUserIdAndEmailArgs {
   userId: Scalars['Int']['input'];
 }
 
+/** Input for the refreshToken mutation. */
+export interface RefreshTokenInput {
+  /** Valid refresh token */
+  refreshToken: Scalars['String']['input'];
+}
+
+/** Input for the register mutation. */
+export interface RegisterInput {
+  /** Email address */
+  email: Scalars['String']['input'];
+  /** Display name (optional) */
+  name?: InputMaybe<Scalars['String']['input']>;
+  /** Password (minimum 8 characters) */
+  password: Scalars['String']['input'];
+  /** Unique username (3-50 characters, alphanumeric with underscores) */
+  username: Scalars['String']['input'];
+}
+
 /** All input for the `resetPassword` mutation. */
 export interface ResetPasswordInput {
   /**
@@ -1289,6 +1378,19 @@ export interface ResetPasswordPayload {
 /** The output of our `resetPassword` mutation. */
 export interface ResetPasswordPayloadUserEdgeArgs {
   orderBy?: InputMaybe<Array<UsersOrderBy>>;
+}
+
+/** The root subscription type: contains realtime events you can subscribe to with the `subscription` operation. */
+export interface Subscription {
+  __typename?: 'Subscription';
+  listen: ListenPayload;
+}
+
+
+/** The root subscription type: contains realtime events you can subscribe to with the `subscription` operation. */
+export interface SubscriptionListenArgs {
+  initialEvent?: Scalars['Boolean']['input'];
+  topic: Scalars['String']['input'];
 }
 
 /** An individual message thread within a Forum. */

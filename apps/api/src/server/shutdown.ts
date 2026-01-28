@@ -1,6 +1,8 @@
 import { IncomingMessage, Server, ServerResponse } from 'node:http';
 
 import { closePool } from '@app/database';
+import { stopWorker } from '@app/jobs';
+import { shutdownSubscriptions } from '@app/subscriptions';
 import { env, logger } from '@app/utils';
 import { HttpRequestHandler } from 'postgraphile';
 
@@ -46,6 +48,14 @@ export function setupGracefulShutdown(
             // TO-DO: Release PostGraphile resources
             await pgl.release();
             logger.info('PostGraphile released');
+
+            // Stop job worker
+            await stopWorker();
+            logger.info('Job worker stopped');
+
+            // Shutdown subscriptions
+            await shutdownSubscriptions();
+            logger.info('Subscriptions shutdown');
 
             // Close database pool
             await closePool();

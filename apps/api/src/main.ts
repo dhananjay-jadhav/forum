@@ -1,6 +1,8 @@
 import { createServer } from 'node:http';
 
 import { getPool } from '@app/database';
+import { forumCrontab, forumTaskList, startWorker } from '@app/jobs';
+import { initializeSubscriptions } from '@app/subscriptions';
 import { env, logger } from '@app/utils';
 import express, { Express } from 'express';
 
@@ -12,7 +14,7 @@ import { setupGracefulShutdown, setupGraphQL } from './server';
 // Server Initialization
 // ============================================================================
 
-function startServer(): void {
+async function startServer(): Promise<void> {
     try {
         // Create Express app and HTTP server
         const app: Express = express();
@@ -29,6 +31,17 @@ function startServer(): void {
         // Initialize database connection
         getPool();
         logger.info('Database pool initialized');
+
+        // Initialize subscriptions manager for real-time events
+        await initializeSubscriptions();
+        logger.info('Subscriptions manager initialized');
+
+        // Start job worker for background task processing
+        await startWorker({
+            taskList: forumTaskList,
+            crontab: forumCrontab,
+        });
+        logger.info('Job worker started');
 
         // Setup middleware (logging, static files, etc.)
         setupMiddleware(app);
@@ -62,4 +75,7 @@ function startServer(): void {
 // ============================================================================
 // Entry Point
 // ============================================================================
-startServer();
+startServer().catch((err) => {
+    logger.error({ error: err }, 'Failed to start server');
+    process.exit(1);
+});

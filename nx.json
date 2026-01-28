@@ -51,7 +51,21 @@
             "options": {
                 "targetName": "test"
             },
-            "exclude": ["apps/api-e2e/**/*"]
+            "exclude": ["apps/api-e2e/**/*", "apps/analytics-api-e2e/**/*", "apps/search-api-e2e/**/*"]
+        },
+        {
+            "plugin": "@nx/vite/plugin",
+            "options": {
+                "buildTargetName": "build",
+                "testTargetName": "test",
+                "serveTargetName": "serve",
+                "devTargetName": "dev",
+                "previewTargetName": "preview",
+                "serveStaticTargetName": "serve-static",
+                "typecheckTargetName": "typecheck",
+                "buildDepsTargetName": "build-deps",
+                "watchDepsTargetName": "watch-deps"
+            }
         }
     ],
     "targetDefaults": {
@@ -62,6 +76,23 @@
             "cache": true,
             "dependsOn": ["^build"],
             "inputs": ["production", "^production"]
+        }
+    },
+    "generators": {
+        "@nx/react": {
+            "application": {
+                "babel": true,
+                "style": "css",
+                "linter": "eslint",
+                "bundler": "vite"
+            },
+            "component": {
+                "style": "css"
+            },
+            "library": {
+                "style": "css",
+                "linter": "eslint"
+            }
         }
     }
 }
