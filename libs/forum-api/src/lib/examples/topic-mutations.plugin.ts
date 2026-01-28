@@ -1,4 +1,5 @@
 // Import generated types from @app/gql
+/* eslint-disable */
 import type { TopicInput, TopicPatch } from '@app/gql';
 import type { Plugin } from 'graphile-build';
 import { gql, makeExtendSchemaPlugin } from 'graphile-utils';

@@ -2,13 +2,13 @@
  * Register Page
  */
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, JSX, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../../contexts/AuthContext';
 import styles from './Auth.module.css';
 
-export function RegisterPage() {
+export function RegisterPage(): JSX.Element {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -20,7 +20,7 @@ export function RegisterPage() {
     const { register } = useAuth();
     const navigate = useNavigate();
 
-    const handleSubmit = async (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent): Promise<void> => {
         e.preventDefault();
         setError('');
 
@@ -38,7 +38,7 @@ export function RegisterPage() {
 
         try {
             await register(username, email, password, name || undefined);
-            navigate('/');
+            await navigate('/');
         } catch (err) {
             setError(
                 err instanceof Error

@@ -1,4 +1,5 @@
 // Import generated types from @app/gql
+/* eslint-disable */
 import type { ForumInput, ForumPatch } from '@app/gql';
 import type { Plugin } from 'graphile-build';
 import { gql, makeExtendSchemaPlugin } from 'graphile-utils';

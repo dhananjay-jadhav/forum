@@ -3,6 +3,7 @@
  */
 
 import { useQuery } from '@apollo/client';
+import { JSX } from 'react';
 import { Link } from 'react-router-dom';
 
 import { LoadingSpinner } from '../../components/LoadingSpinner';
@@ -24,7 +25,7 @@ interface ForumsData {
     };
 }
 
-export function HomePage() {
+export function HomePage(): JSX.Element {
     const { data, loading, error } = useQuery<ForumsData>(GET_FORUMS);
 
     if (loading) {

@@ -7,6 +7,7 @@
 import { useMutation, useQuery } from '@apollo/client';
 import {
     createContext,
+    JSX,
     ReactNode,
     useCallback,
     useContext,
@@ -61,7 +62,7 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
+export function AuthProvider({ children }: Readonly<{ children: ReactNode }>): JSX.Element {
     const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -177,7 +178,7 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
     );
 }
 
-export function useAuth() {
+export function useAuth(): AuthContextType {
     const context = useContext(AuthContext);
     if (context === undefined) {
         throw new Error('useAuth must be used within an AuthProvider');

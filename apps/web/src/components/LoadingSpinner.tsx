@@ -2,13 +2,15 @@
  * Loading Spinner Component
  */
 
+import { JSX } from 'react';
+
 import styles from './LoadingSpinner.module.css';
 
 interface LoadingSpinnerProps {
     size?: 'small' | 'medium' | 'large';
 }
 
-export function LoadingSpinner({ size = 'medium' }: Readonly<LoadingSpinnerProps>) {
+export function LoadingSpinner({ size = 'medium' }: Readonly<LoadingSpinnerProps>): JSX.Element {
     return (
         <div className={`${styles.spinner} ${styles[size]}`}>
             <div className={styles.bounce1}></div>

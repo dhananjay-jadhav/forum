@@ -2,7 +2,7 @@
  * Main Layout Component
  */
 
-import { ReactNode } from 'react';
+import { JSX, ReactNode } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../contexts/AuthContext';
@@ -12,13 +12,13 @@ interface LayoutProps {
     children: ReactNode;
 }
 
-export function Layout({ children }: Readonly<LayoutProps>) {
+export function Layout({ children }: Readonly<LayoutProps>): JSX.Element {
     const { user, isAuthenticated, logout } = useAuth();
     const navigate = useNavigate();
 
-    const handleLogout = async () => {
+    const handleLogout = async (): Promise<void> => {
         await logout();
-        navigate('/');
+        await navigate('/');
     };
 
     return (

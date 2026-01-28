@@ -2,13 +2,13 @@
  * Login Page
  */
 
-import { FormEvent, useState } from 'react';
+import { FormEvent, JSX, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../../contexts/AuthContext';
 import styles from './Auth.module.css';
 
-export function LoginPage() {
+export function LoginPage(): JSX.Element {
     const [usernameOrEmail, setUsernameOrEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -17,14 +17,14 @@ export function LoginPage() {
     const { login } = useAuth();
     const navigate = useNavigate();
 
-    const handleSubmit = async (e: FormEvent) => {
+    const handleSubmit = async (e: FormEvent): Promise<void> => {
         e.preventDefault();
         setError('');
         setIsLoading(true);
 
         try {
             await login(usernameOrEmail, password);
-            navigate('/');
+            await navigate('/');
         } catch (err) {
             setError(
                 err instanceof Error

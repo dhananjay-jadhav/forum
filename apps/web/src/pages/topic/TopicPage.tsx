@@ -3,7 +3,7 @@
  */
 
 import { useMutation, useQuery } from '@apollo/client';
-import { FormEvent, useState } from 'react';
+import { FormEvent, JSX, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { LoadingSpinner } from '../../components/LoadingSpinner';
@@ -47,7 +47,7 @@ interface TopicData {
     topic: Topic | null;
 }
 
-export function TopicPage() {
+export function TopicPage(): JSX.Element {
     const { topicId } = useParams<{
         forumSlug: string;
         topicId: string;
@@ -68,7 +68,7 @@ export function TopicPage() {
         refetchQueries: [{ query: GET_TOPIC, variables: { id: topicId ? parseInt(topicId, 10) : 0 } }],
     });
 
-    const handleSubmitReply = async (e: FormEvent) => {
+    const handleSubmitReply = async (e: FormEvent): Promise<void> => {
         e.preventDefault();
         setError('');
 

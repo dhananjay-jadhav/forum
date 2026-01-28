@@ -3,7 +3,7 @@
  */
 
 import { useMutation, useQuery } from '@apollo/client';
-import { FormEvent, useState } from 'react';
+import { FormEvent, JSX, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { LoadingSpinner } from '../../components/LoadingSpinner';
@@ -37,7 +37,7 @@ interface ForumData {
     forumBySlug: Forum | null;
 }
 
-export function ForumPage() {
+export function ForumPage(): JSX.Element {
     const { slug } = useParams<{ slug: string }>();
     const { isAuthenticated } = useAuth();
     const [showNewTopic, setShowNewTopic] = useState(false);
@@ -57,7 +57,7 @@ export function ForumPage() {
         refetchQueries: [{ query: GET_FORUM, variables: { slug } }, { query: GET_FORUMS }],
     });
 
-    const handleCreateTopic = async (e: FormEvent) => {
+    const handleCreateTopic = async (e: FormEvent): Promise<void> => {
         e.preventDefault();
         setError('');
 

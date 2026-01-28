@@ -3,6 +3,7 @@
  */
 
 import { ApolloProvider } from '@apollo/client';
+import { JSX } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { Layout } from '../components/Layout';
@@ -14,7 +15,7 @@ import { ForumPage } from '../pages/forum/ForumPage';
 import { HomePage } from '../pages/home/HomePage';
 import { TopicPage } from '../pages/topic/TopicPage';
 
-export function App() {
+export function App(): JSX.Element {
     return (
         <ApolloProvider client={apolloClient}>
             <AuthProvider>
