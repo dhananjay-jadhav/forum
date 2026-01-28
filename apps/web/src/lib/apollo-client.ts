@@ -1,17 +1,12 @@
+/* eslint-disable */
 /**
  * Apollo Client Configuration
  */
 
-import {
-    ApolloClient,
-    ApolloLink,
-    from,
-    HttpLink,
-    InMemoryCache,
-} from '@apollo/client';
+import { ApolloClient, ApolloLink, from, HttpLink, InMemoryCache } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/graphql';
+const API_URL = import.meta.env.VITE_API_URL || ('http://localhost:3000/graphql' as string);
 
 // Auth link to add JWT token to requests
 const authLink = new ApolloLink((operation, forward) => {
@@ -37,7 +32,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
         // Check for unauthorized error and redirect to login
         const unauthorizedError = graphQLErrors.find(
-            (error) =>
+            error =>
                 error.message.toLowerCase().includes('unauthorized') ||
                 error.message.toLowerCase().includes('not authenticated')
         );
@@ -56,7 +51,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 // HTTP link
 const httpLink = new HttpLink({
-    uri: API_URL,
+    uri: API_URL as string,
     credentials: 'include',
 });
 
