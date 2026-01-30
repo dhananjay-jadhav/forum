@@ -2,24 +2,6 @@
  * Performance Test Configuration Types
  */
 
-/** API services available for testing */
-export type ApiService = 'api' | 'analytics' | 'search';
-
-/** Test categories for grouping */
-export type TestCategory = 'rest' | 'graphql' | 'analytics' | 'search';
-
-/** Configuration for each API service */
-export interface ApiConfig {
-    /** Display name */
-    name: string;
-    /** Base URL */
-    baseUrl: string;
-    /** Default port */
-    port: number;
-    /** Health check endpoint */
-    healthEndpoint: string;
-}
-
 export interface TestConfig {
     /** Display name for the test */
     name: string;
@@ -32,9 +14,7 @@ export interface TestConfig {
     /** Request body (for POST/PUT/PATCH) */
     body?: string;
     /** Test category for grouping */
-    category: TestCategory;
-    /** Which API service this test targets */
-    service?: ApiService;
+    category: 'rest' | 'graphql';
     /** Description of what this test measures */
     description?: string;
 }

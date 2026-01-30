@@ -1,11 +1,24 @@
-import { IncomingMessage, ServerResponse } from 'node:http';
+import { Server } from 'node:http';
 
-import { getPool } from '@app/database';
-import { getDatabaseSchemas } from '@app/utils';
-import postgraphile, { HttpRequestHandler } from 'postgraphile';
+import { Express } from 'express';
+import { grafserv } from 'grafserv/express/v4';
+import { postgraphile, PostGraphileInstance } from 'postgraphile';
 
-import { postGraphileOptions } from './graphile.config';
+import { preset } from './graphile.config.js';
 
-export function setupGraphQL(): HttpRequestHandler<IncomingMessage, ServerResponse<IncomingMessage>> {
-    return postgraphile(getPool(), getDatabaseSchemas(), postGraphileOptions);
+/**
+ * Initializes and mounts the PostGraphile GraphQL server.
+ *
+ * Query validation (depth/cost limits) is handled by QueryValidationPlugin
+ * which hooks into grafast's middleware after parsing, avoiding double-parse.
+ *
+ * @throws Error if GraphQL server fails to initialize
+ */
+export async function setupGraphQL(app: Express, server: Server): Promise<PostGraphileInstance> {
+    const pgl = postgraphile(preset);
+    const serv = pgl.createServ(grafserv);
+
+    await serv.addTo(app, server);
+
+    return pgl;
 }

@@ -3,15 +3,5 @@
  */
 
 export { TestRunner } from './runner';
-export {
-    getAllTests,
-    getTestsByCategory,
-    getTestsByService,
-    getTestNames,
-    getRestTests,
-    getGraphQLTests,
-    getAnalyticsTests,
-    getSearchTests,
-    API_CONFIGS,
-} from './tests/index';
-export type { TestConfig, TestResult, RunnerConfig, TestSummary, ApiService, ApiConfig, TestCategory } from './types';
+export { getAllTests, getTestsByCategory, getTestNames, getRestTests, getGraphQLTests } from './tests/index';
+export type { TestConfig, TestResult, RunnerConfig, TestSummary } from './types';

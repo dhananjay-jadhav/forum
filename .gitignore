@@ -54,4 +54,3 @@ performance/results/*.json
 
 # .yarn/*
 .yarn/install-state.gz
-vite.config.*.timestamp*

@@ -5,12 +5,10 @@
  */
 
 import autocannon, { Result } from 'autocannon';
-import { ApiConfig, ApiService, RunnerConfig, TestConfig, TestResult, TestSummary } from './types';
-import { API_CONFIGS } from './tests/index';
+import { RunnerConfig, TestConfig, TestResult, TestSummary } from './types';
 
 export class TestRunner {
     private config: RunnerConfig;
-    private apiConfigs: Record<ApiService, ApiConfig>;
 
     constructor(config: Partial<RunnerConfig> = {}) {
         this.config = {
@@ -19,40 +17,15 @@ export class TestRunner {
             connections: config.connections || parseInt(process.env.CONNECTIONS || '10', 10),
             pipelining: config.pipelining || parseInt(process.env.PIPELINING || '1', 10),
         };
-
-        // Initialize API configs with environment overrides
-        this.apiConfigs = {
-            api: {
-                ...API_CONFIGS.api,
-                baseUrl: process.env.API_URL || API_CONFIGS.api.baseUrl,
-            },
-            analytics: {
-                ...API_CONFIGS.analytics,
-                baseUrl: process.env.ANALYTICS_API_URL || API_CONFIGS.analytics.baseUrl,
-            },
-            search: {
-                ...API_CONFIGS.search,
-                baseUrl: process.env.SEARCH_API_URL || API_CONFIGS.search.baseUrl,
-            },
-        };
     }
 
-    async checkServerReachable(service: ApiService = 'api'): Promise<boolean> {
-        const config = this.apiConfigs[service];
+    async checkServerReachable(): Promise<boolean> {
         try {
-            const response = await fetch(`${config.baseUrl}${config.healthEndpoint}`);
+            const response = await fetch(`${this.config.baseUrl}/live`);
             return response.ok;
         } catch {
             return false;
         }
-    }
-
-    async checkAllServersReachable(): Promise<Record<ApiService, boolean>> {
-        const results: Record<ApiService, boolean> = {} as Record<ApiService, boolean>;
-        for (const service of Object.keys(this.apiConfigs) as ApiService[]) {
-            results[service] = await this.checkServerReachable(service);
-        }
-        return results;
     }
 
     async runTest(testName: string, testConfig: TestConfig): Promise<TestResult> {
@@ -147,17 +120,5 @@ export class TestRunner {
 
     getConfig(): RunnerConfig {
         return { ...this.config };
-    }
-
-    getApiConfigs(): Record<ApiService, ApiConfig> {
-        return { ...this.apiConfigs };
-    }
-
-    getApiUrlConfigs(): Partial<Record<ApiService, string>> {
-        return {
-            api: this.apiConfigs.api.baseUrl,
-            analytics: this.apiConfigs.analytics.baseUrl,
-            search: this.apiConfigs.search.baseUrl,
-        };
     }
 }

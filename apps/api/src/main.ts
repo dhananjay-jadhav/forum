@@ -1,8 +1,6 @@
 import { createServer } from 'node:http';
 
 import { getPool } from '@app/database';
-import { forumCrontab, forumTaskList, startWorker } from '@app/jobs';
-import { initializeSubscriptions } from '@app/subscriptions';
 import { env, logger } from '@app/utils';
 import express, { Express } from 'express';
 
@@ -15,67 +13,49 @@ import { setupGracefulShutdown, setupGraphQL } from './server';
 // ============================================================================
 
 async function startServer(): Promise<void> {
-    try {
-        // Create Express app and HTTP server
-        const app: Express = express();
-        const server = createServer(app);
+    // Create Express app and HTTP server
+    const app: Express = express();
+    const server = createServer(app);
 
-        server.keepAliveTimeout = env.KEEP_ALIVE_TIMEOUT || 65000;
+    server.keepAliveTimeout = env.KEEP_ALIVE_TIMEOUT || 65000;
 
-        // Handle server errors
-        server.on('error', (error: Error) => {
-            logger.error({ error }, 'Server error');
-            process.exit(1);
-        });
+    // Handle server errors
+    server.on('error', (error: Error) => {
+        logger.error({ error }, 'Server error');
+        process.exit(1);
+    });
 
-        // Initialize database connection
-        getPool();
-        logger.info('Database pool initialized');
+    // Initialize database connection
+    getPool();
+    logger.info('Database pool initialized');
 
-        // Initialize subscriptions manager for real-time events
-        await initializeSubscriptions();
-        logger.info('Subscriptions manager initialized');
+    // Setup middleware (logging, static files, etc.)
+    setupMiddleware(app);
 
-        // Start job worker for background task processing
-        await startWorker({
-            taskList: forumTaskList,
-            crontab: forumCrontab,
-        });
-        logger.info('Job worker started');
+    // Mount application routes (health, api)
+    app.use(router);
 
-        // Setup middleware (logging, static files, etc.)
-        setupMiddleware(app);
+    // Setup GraphQL server (must be before error handlers)
+    const pgl = await setupGraphQL(app, server);
 
-        // Mount application routes (health, api)
-        app.use(router);
+    // Setup error handlers (must be after GraphQL)
+    setupErrorHandlers(app);
 
-        // Setup GraphQL server (must be before error handlers)
-        const pgl = setupGraphQL();
-        app.use(pgl);
+    // Setup graceful shutdown handlers
+    setupGracefulShutdown(server, pgl);
 
-        // Setup error handlers (must be after GraphQL)
-        setupErrorHandlers(app);
-
-        // Setup graceful shutdown handlers
-        setupGracefulShutdown(server, pgl);
-
-        // Start listening
-        server.listen(env.PORT, () => {
-            logger.info(
-                { port: env.PORT, env: env.NODE_ENV },
-                `${env.APP_NAME} listening at http://localhost:${env.PORT}`
-            );
-            logger.info({ port: env.PORT }, `GraphQL available at http://localhost:${env.PORT}/graphql`);
-        });
-    } catch (err) {
-        logger.error(err);
-    }
+    // Start listening
+    server.listen(env.PORT, () => {
+        logger.info({ port: env.PORT, env: env.NODE_ENV }, `${env.APP_NAME} listening at http://localhost:${env.PORT}`);
+        logger.info({ port: env.PORT }, `GraphQL available at http://localhost:${env.PORT}/graphql`);
+    });
 }
 
 // ============================================================================
 // Entry Point
 // ============================================================================
-startServer().catch((err) => {
-    logger.error({ error: err }, 'Failed to start server');
+
+startServer().catch((error: Error) => {
+    logger.error({ error }, 'Failed to start server');
     process.exit(1);
 });

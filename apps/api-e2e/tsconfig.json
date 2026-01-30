@@ -7,9 +7,5 @@
         "noImplicitAny": false
     },
     "include": ["jest.config.ts", "src/**/*.ts"],
-    "references": [
-        {
-            "path": "../../libs/user-api"
-        }
-    ]
+    "references": []
 }

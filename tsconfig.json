@@ -5,16 +5,7 @@
         "paths": {
             "@app/utils": ["libs/utils/src/index.ts"],
             "@app/database": ["libs/database/src/index.ts"],
-            "@app/gql": ["libs/gql/src/index.ts"],
-            "@app/forum-api": ["libs/forum-api/src/index.ts"],
-            "@app/user-api": ["libs/user-api/src/index.ts"],
-            "@app/jobs": ["libs/jobs/src/index.ts"],
-            "@app/subscriptions": ["libs/subscriptions/src/index.ts"],
-            "@app/email": ["libs/email/src/index.ts"],
-            "@app/notifications": ["libs/notifications/src/index.ts"],
-            "@app/moderation": ["libs/moderation/src/index.ts"],
-            "@app/cleanup": ["libs/cleanup/src/index.ts"],
-            "@app/kafka": ["libs/kafka/src/index.ts"]
+            "@app/gql": ["libs/gql/src/index.ts"]
         }
     },
     "compileOnSave": false,
@@ -34,48 +25,6 @@
         },
         {
             "path": "./libs/gql"
-        },
-        {
-            "path": "./libs/forum-api"
-        },
-        {
-            "path": "./libs/user-api"
-        },
-        {
-            "path": "./libs/jobs"
-        },
-        {
-            "path": "./libs/subscriptions"
-        },
-        {
-            "path": "./libs/email"
-        },
-        {
-            "path": "./libs/notifications"
-        },
-        {
-            "path": "./libs/moderation"
-        },
-        {
-            "path": "./libs/cleanup"
-        },
-        {
-            "path": "./libs/kafka"
-        },
-        {
-            "path": "./apps/analytics-api-e2e"
-        },
-        {
-            "path": "./apps/analytics-api"
-        },
-        {
-            "path": "./apps/search-api-e2e"
-        },
-        {
-            "path": "./apps/search-api"
-        },
-        {
-            "path": "./apps/web"
         }
     ]
 }

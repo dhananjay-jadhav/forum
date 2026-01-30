@@ -1,6 +1,4 @@
-import { performance } from 'node:perf_hooks';
-
-import { DatabaseError, env, logger, registerHealthCheck } from '@app/utils';
+import { DatabaseError, logger, registerHealthCheck } from '@app/utils';
 import { Pool, PoolClient, QueryResult, QueryResultRow } from 'pg';
 
 import { databaseConfig } from './database.config';
@@ -44,32 +42,11 @@ export async function query<T extends QueryResultRow = QueryResultRow>(
     text: string,
     params?: unknown[]
 ): Promise<QueryResult<T>> {
-    const start = performance.now();
-    let result: QueryResult<T> | undefined;
-    let queryError: Error | undefined;
-    
     try {
-        result = await getPool().query<T>(text, params);
-        return result;
+        return await getPool().query<T>(text, params);
     } catch (error) {
-        queryError = error instanceof Error ? error : new Error('Query failed');
-        throw new DatabaseError(queryError.message);
-    } finally {
-        if (env.SHOW_SQL_QUERIES) {
-            const duration = performance.now() - start;
-            const logData = {
-                sql: text,
-                params,
-                durationMs: Number(duration.toFixed(2)),
-                rowCount: result?.rowCount ?? null,
-            };
-            
-            if (queryError) {
-                logger.error({ ...logData, error: queryError.message }, 'SQL Query failed');
-            } else {
-                logger.debug(logData, 'SQL Query executed');
-            }
-        }
+        const message = error instanceof Error ? error.message : 'Query failed';
+        throw new DatabaseError(message);
     }
 }
 
@@ -84,38 +61,20 @@ export async function getClient(): Promise<PoolClient> {
 
 export async function withTransaction<T>(fn: (client: PoolClient) => Promise<T>): Promise<T> {
     const client = await getClient();
-    const start = performance.now();
-    let transactionError: Error | undefined;
-    let result: T | undefined;
-
     try {
         await client.query('BEGIN');
-        result = await fn(client);
+        const result = await fn(client);
         await client.query('COMMIT');
         return result;
     } catch (error) {
-        transactionError = error instanceof Error ? error : new Error('Transaction failed');
         await client.query('ROLLBACK');
         if (error instanceof DatabaseError) {
             throw error;
         }
-        throw new DatabaseError(transactionError.message);
+        const message = error instanceof Error ? error.message : 'Transaction failed';
+        throw new DatabaseError(message);
     } finally {
         client.release();
-
-        if (env.SHOW_SQL_QUERIES) {
-            const duration = performance.now() - start;
-            const logData = {
-                durationMs: Number(duration.toFixed(2)),
-                status: transactionError ? 'ROLLBACK' : 'COMMIT',
-            };
-
-            if (transactionError) {
-                logger.error({ ...logData, error: transactionError.message }, 'Transaction failed');
-            } else {
-                logger.debug(logData, 'Transaction completed');
-            }
-        }
     }
 }
 

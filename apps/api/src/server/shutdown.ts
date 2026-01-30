@@ -1,19 +1,14 @@
-import { IncomingMessage, Server, ServerResponse } from 'node:http';
+import { Server } from 'node:http';
 
 import { closePool } from '@app/database';
-import { stopWorker } from '@app/jobs';
-import { shutdownSubscriptions } from '@app/subscriptions';
 import { env, logger } from '@app/utils';
-import { HttpRequestHandler } from 'postgraphile';
+import { PostGraphileInstance } from 'postgraphile';
 
 /**
  * Sets up graceful shutdown handlers for SIGTERM and SIGINT signals.
  * Ensures proper cleanup of resources before process exit.
  */
-export function setupGracefulShutdown(
-    server: Server,
-    pgl: HttpRequestHandler<IncomingMessage, ServerResponse<IncomingMessage>>
-): void {
+export function setupGracefulShutdown(server: Server, pgl: PostGraphileInstance): void {
     let isShuttingDown = false;
 
     const shutdown = async (signal: string): Promise<void> => {
@@ -45,17 +40,9 @@ export function setupGracefulShutdown(
             });
             logger.info('HTTP server closed');
 
-            // TO-DO: Release PostGraphile resources
+            // Release PostGraphile resources
             await pgl.release();
             logger.info('PostGraphile released');
-
-            // Stop job worker
-            await stopWorker();
-            logger.info('Job worker stopped');
-
-            // Shutdown subscriptions
-            await shutdownSubscriptions();
-            logger.info('Subscriptions shutdown');
 
             // Close database pool
             await closePool();

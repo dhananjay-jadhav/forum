@@ -17,8 +17,11 @@
     "dependencies": {
         "@app/utils": "0.0.1",
         "@graphql-codegen/cli": "^5.0.3",
-        "graphql": "15.10.1",
-        "postgraphile": "^4.14.1",
+        "express": "^4.21.2",
+        "grafast": "1.0.0-rc.3",
+        "grafserv": "^1.0.0-rc.3",
+        "graphql": "^16.9.0",
+        "pino": "^10.1.0",
         "tslib": "^2.3.0"
     }
 }

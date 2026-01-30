@@ -48,21 +48,6 @@ jobs:
     e2e:
         runs-on: ubuntu-latest
         needs: lint-test-build
-        strategy:
-            fail-fast: false
-            matrix:
-                app:
-                    - name: api
-                      e2e: api-e2e
-                      port: 3000
-                    - name: analytics-api
-                      e2e: analytics-api-e2e
-                      port: 3002
-                    - name: search-api
-                      e2e: search-api-e2e
-                      port: 3003
-
-        name: e2e (${{ matrix.app.name }})
 
         steps:
             - uses: actions/checkout@v4
@@ -83,16 +68,8 @@ jobs:
             - name: Start PostgreSQL
               run: docker compose up -d --wait
 
-            - name: Run DB:migrate
-              run: yarn db:migrate
-
-            - name: Start ${{ matrix.app.name }}
-              run: |
-                  yarn nx serve @app/${{ matrix.app.name }} &
-                  npx wait-on http://localhost:${{ matrix.app.port }} --timeout 60000
-
-            - name: Run ${{ matrix.app.e2e }} tests
-              run: yarn e2e ${{ matrix.app.e2e }} --skip-nx-cache
+            - name: Run e2e tests
+              run: yarn e2e api-e2e --skip-nx-cache
 
             - name: Stop PostgreSQL
               if: always()
